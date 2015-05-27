@@ -41,6 +41,25 @@ _print_fatal() {
     echo $(_hl_red '==>') "$@" >&2
 }
 
+_is_number() {
+    local re='^[0-9]+$'
+    local number="$1"
+
+    if [ "x$number" == "x" ]; then
+        _print_fatal "error: _is_number need one parameter"
+        exit 1
+    else
+        number=${number//[[:space:]]/}
+    fi
+
+    if ! [[ $number =~ $re ]] ; then
+        _print_fatal "error: ${number} not a number" >&2
+        exit 1
+    else
+        return 0
+    fi
+}
+
 usage() {
     cat << USAGE
 Usage: bash ${MYNAME} [options] tplfile.
@@ -77,10 +96,12 @@ function _parse_options()
             	;;
             -p|--port)
                 g_PORT_START="${2}"
-            	shift
+                _is_number "${g_PORT_START}"
+                shift 2
             	;;
             -n|--num)
                 g_INST_NUM="${2}"
+                _is_number "${g_INST_NUM}"
                 shift 2
                 ;;
             -h|--help)
@@ -114,13 +135,20 @@ function _parse_options()
     esac
 }
 
+OS=`uname | tr '[A-Z]' '[a-z]'`
+if [ "$OS" == "darwin" ]; then
+    _readlink="greadlink"
+else
+    _readlink="readlink"
+fi
+
 ################################## main route #################################
 _parse_options "${@}" || usage
 
 g_PORT_END=$((${g_PORT_START}+${g_INST_NUM}))
 g_FINAL_REDISFILE="${g_DIR}/${g_REDIS_FILE}"
 
-g_FINAL_TPLFILE=$(readlink -f "${g_DIR}/${g_TPL_FILE}")
+g_FINAL_TPLFILE=$(${_readlink} -f "${g_DIR}/${g_TPL_FILE}")
 if [ ! -e ${g_FINAL_TPLFILE} ]; then
     _print_fatal "Template configure file $g_FINAL_TPLFILE is not exist."
     usage
