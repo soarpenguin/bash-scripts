@@ -31,6 +31,10 @@ netstat -nr
 ip route show
 ip ro add 10.0.0.0/8 via 10.11.11.254
 
+# add/del vip on local dev(lo:14)
+/sbin/ifconfig lo:14 10.11.18.14 broadcast 10.11.18.14 netmask 0xffffffff up && /sbin/route add -host 10.11.18.14 dev lo:14
+ip addr del 10.11.18.14/32 dev lo:14
+
 #config initcwnd and initrwnd
 ip route | while read p; do echo "ip route change $p initcwnd 10 initrwnd 10"; done
 
