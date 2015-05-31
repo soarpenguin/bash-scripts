@@ -217,6 +217,7 @@ do
 
 done < ${g_HOST_LIST}
 
+wait
 rm -f ${TMPFILE}
 #trap - INT TERM EXIT
 exec 9<&-
