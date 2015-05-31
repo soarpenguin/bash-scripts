@@ -66,11 +66,11 @@ _usage() {
 Usage: bash ${MYNAME} [options] hostlist command.
 
 Options:
-    -c, --concurrent num  Thread Nummber for run the command at same time, default: 1.
-    -s, --ssh             Use ssh authorized_keys to login without password query from DB.
-    -p, --port  port      Use port instead of defult port:22.
-    -l, --limit num       Limit num for host to run when limit less then all host num.
-    -h, --help            Print this help infomation.
+    -c, --concurrent num   Thread Nummber for run the command at same time, default: 1.
+    -s, --ssh              Use ssh authorized_keys to login without password query from DB.
+    -p, --port      port   Use port instead of defult port:22.
+    -l, --limit      num   Limit num for host to run when limit less then all host num.
+    -h, --help             Print this help infomation.
 
 Require:
     hostlist            Machine list filename for operation.
@@ -161,7 +161,7 @@ mkfifo ${TMPFILE}
 exec 9<>${TMPFILE}
 
 #trap "rm -f ${TMPFILE}; exit" INT TERM EXIT
-cleanup() { rm -f "${TMPFILE}" ; }
+cleanup() { if [ -e ${TMPFILE} ]; then rm -f "${TMPFILE}" ; fi }
 trap cleanup EXIT TERM EXIT;
 
 #trap 'rm -f "${TMPFILE}"; exit $?' INT TERM EXIT
