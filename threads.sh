@@ -4,17 +4,17 @@
 export PS4='+ [`basename ${BASH_SOURCE[0]}`:$LINENO ${FUNCNAME[0]} \D{%F %T} $$ ] '
 PATH="$PATH:/usr/bin:/bin:/sbin:/usr/sbin"
 export PATH
+SSH="ssh -n -o PasswordAuthentication=no -o StrictHostKeyChecking=no -o ConnectTimeout=5 "
+SCP='scp -q -r -o PasswordAuthentication=no -o StrictHostKeyChecking=no -o ConnectTimeout=5 '
+TMPFILE="pipe.$$"
 
-MYNAME="${0##*/}"
 CURDIR=$(cd "$(dirname "$0")"; pwd);
+MYNAME="${0##*/}"
 
-g_HOST_LIST=$1
+g_HOST_LIST=""
 g_THREAD_NUM=30
 g_PORT=22
 g_LIMIT=0
-TMPFILE="pipe.$$"
-SSH="ssh -n -o PasswordAuthentication=no -o StrictHostKeyChecking=no -o ConnectTimeout=5 "
-SCP='scp -q -r -o PasswordAuthentication=no -o StrictHostKeyChecking=no -o ConnectTimeout=5 '
 
 RET_OK=0
 RET_FAIL=1
@@ -151,6 +151,13 @@ if [ ! -e $g_HOST_LIST ]; then
     _print_fatal "machine list file $g_HOST_LIST is not exist."
     _usage
 fi
+
+g_CMD=${g_CMD//[[:space:]]/}
+if [ x"$g_CMD" == "x" ]; then
+    _print_fatal "command string is null."
+    _usage
+fi
+
 if [ -d log ]; then
     rm -rf log
 fi
