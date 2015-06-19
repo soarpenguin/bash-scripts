@@ -53,11 +53,11 @@ _is_number() {
         number=${number//[[:space:]]/}
     fi
 
-    if ! [[ $number =~ $re ]] ; then
+    if [[ $number =~ $re ]] ; then
+        return 0
+    else
         _print_fatal "error: ${number} not a number" >&2
         exit 1
-    else
-        return 0
     fi
 }
 
