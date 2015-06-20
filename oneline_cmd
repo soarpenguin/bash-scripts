@@ -69,6 +69,9 @@ tcpdump  -XvvennSs 0 -i eth0 tcp[20:2]=0x4745 or tcp[20:2]=0x4854
 tcpdump  -XvvnnSs 0 -i any host 10.10.0.20 and port 389
 tcpdump -i eth0 port 80 -w -
 tcpdump -nnvXSs 0 -c2 icmp
+# wireshark filter
+# tcp.srcport == 54471 or tcp.dstport == 54471
+# tcp.flags.reset == 1
 
 #tcpflow
 tcpflow -cp -i eth0 "port 80"
