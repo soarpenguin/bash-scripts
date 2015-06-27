@@ -151,6 +151,7 @@ mount /dev/md0 /mnt
 #mysql
 #mysql -u* -h* -p -P3306 -e "show databases" | sed -n '2,$p' | xargs -l DB 'mysqldump DB > DB.sql';
 #mysqldump --add-drop-table -uroot -p nowait > backupfile.sql
+#mysql -uroot --default-character-set=utf8 -p
 
 #look for system perfermace.
 #cmd interval count
