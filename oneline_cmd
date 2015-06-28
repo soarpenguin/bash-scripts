@@ -211,3 +211,5 @@ ps aux | awk '{if($1=="root") print $(NF-1)}'
 # cd /var/lib/rpm && rm -rf __db* # rm lock file for rpm no respose.
 # rpm -ivh -vv --force --nosignature elasticsearch-1.5.1.rpm
 
+### mac install cocoapods
+#gem install cocoapods
