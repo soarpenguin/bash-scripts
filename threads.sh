@@ -61,6 +61,9 @@ _is_number() {
     fi
 }
 
+readlinkf() { perl -MCwd -e 'print Cwd::abs_path shift' $1;}
+# ABSPATH="$(readlinkf ./non-absolute/file)"
+
 _usage() {
     cat << USAGE
 Usage: bash ${MYNAME} [options] hostlist command.
