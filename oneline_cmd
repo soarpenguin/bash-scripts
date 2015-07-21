@@ -213,3 +213,6 @@ ps aux | awk '{if($1=="root") print $(NF-1)}'
 
 ### mac install cocoapods
 #gem install cocoapods
+
+#git rollback version
+#git reset --hard 931c6a6
