@@ -147,3 +147,25 @@ _parse_options()
     esac
 }
 
+#---  FUNCTION  -------------------------------------------------------------------------------------------------------
+#          NAME:  __detect_color_support
+#   DESCRIPTION:  Try to detect color support.
+#----------------------------------------------------------------------------------------------------------------------
+_COLORS=${BS_COLORS:-$(tput colors 2>/dev/null || echo 0)}
+__detect_color_support() {
+    if [ $? -eq 0 ] && [ "$_COLORS" -gt 2 ]; then
+        RC="\033[1;31m"
+        GC="\033[1;32m"
+        BC="\033[1;34m"
+        YC="\033[1;33m"
+        EC="\033[0m"
+    else
+        RC=""
+        GC=""
+        BC=""
+        YC=""
+        EC=""
+    fi
+}
+__detect_color_support
+
