@@ -1,3 +1,17 @@
+#!/usr/bin/env bash
+
+#get all node load info
+#curl 'localhost:9200/_cat/nodes?v'
+
+#get template('logstash') info
+#curl -XGET 'localhost:9200/_template/logstash?pretty'
+
+#get all indices
+#curl 'localhost:9200/_cat/indices?v'
+
+#get one index(logstash-2015.07.28) settings
+#curl -XGET 'localhost:9200/logstash-2015.07.28/_settings?pretty'
+
 curl -XPUT localhost:9200/_template/base -d '
 {
   "order": 1,
