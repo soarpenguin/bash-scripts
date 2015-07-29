@@ -12,12 +12,15 @@
 #get one index(logstash-2015.07.28) settings
 #curl -XGET 'localhost:9200/logstash-2015.07.28/_settings?pretty'
 
+#delete one index template(template_1)
+#curl -XDELETE localhost:9200/_template/template_1
+
 curl -XPUT localhost:9200/_template/base -d '
 {
   "order": 1,
   "template" : "logstash-*",
   "settings": {
-    "index.refresh_interval": "120s",
+    "index.refresh_interval": "30s",
     "index.number_of_replicas": "1",
     "index.number_of_shards": "8",
     "index.routing.allocation.total_shards_per_node": "2",
@@ -124,10 +127,17 @@ curl -XPUT localhost:9200/_template/base -d '
         {
           "string fields": {
             "mapping": {
-              "index": "not_analyzed",
+              "index": "analyzed",
               "omit_norms": true,
               "doc_values": true,
-              "type": "string"
+              "type": "string",
+			  "fields" : {
+                "raw" : {
+                  "index" : "not_analyzed",
+                  "ignore_above" : 256,
+                  "type" : "string"
+                }
+              }
             },
             "match": "*",
             "match_mapping_type": "string"
