@@ -212,7 +212,9 @@ ps aux | awk '{if($1=="root") print $(NF-1)}'
 # rpm -ivh -vv --force --nosignature elasticsearch-1.5.1.rpm
 
 ### mac install cocoapods
+#pod guides: http://guides.cocoapods.org/
 #gem install cocoapods
+#pod install --verbose
 
 #git rollback version
 #git reset --hard 931c6a6
