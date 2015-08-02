@@ -10,6 +10,15 @@ then
     NORMAL="$( echo -e "\e[0m" )"
 fi
 
+#
+# Only use sudo if already root.
+#
+if (( $UID == 0 )); then
+    sudo=""
+else
+    sudo="sudo"
+fi
+
 _hl_red()    { echo "$HL_RED""$@""$NORMAL";}
 _hl_blue()   { echo "$HL_BLUE""$@""$NORMAL";}
 
@@ -26,6 +35,28 @@ _fatal() {
     exit 1
 }
 
+function install_packages()
+{
+	case "$package_manager" in
+		apt)	$sudo apt-get install -y $* || return $? ;;
+		yum)	$sudo yum install -y $* || return $?     ;;
+		port)   $sudo port install $* || return $?       ;;
+		brew)
+			local brew_owner="$(/usr/bin/stat -f %Su "$(command -v brew)")"
+			sudo -u "$brew_owner" brew install $* ||
+			sudo -u "$brew_owner" brew upgrade $* || return $?
+			;;
+		pacman)
+			local missing_pkgs="$(pacman -T $*)"
+
+			if [[ -n "$missing_pkgs" ]]; then
+				$sudo pacman -S $missing_pkgs || return $?
+			fi
+			;;
+		"")	_fatal "Could not determine Package Manager. Proceeding anyway." ;;
+	esac
+}
+
 ########## main route ############
 for cmd in apt-get yum port brew pacman; do
     if command -v $cmd >/dev/null; then
@@ -38,8 +69,7 @@ done
 result=`which ruby`
 if [ "x$result" = 'x' ]; then
     _trace "ruby is not installed, now install ruby."
-    sudo $package_manager install ruby
-    sudo $package_manager install rubygems
+    install_packages "ruby" "rubygems"
 
     if [ $? -eq 0 ]; then
         _trace "install ruby successed."
