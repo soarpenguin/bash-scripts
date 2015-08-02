@@ -28,15 +28,15 @@ function check_mkdir() {
     local dir=$1
 
     if [ x"$dir" == "x" ]; then
-	_trace "dir string is null."
-	return 1
+        _trace "dir string is null."
+	    return 1
     elif [ -d "${dir}" ]; then
-	_trace "dir of ${dir} is existed, skip mkdir."
+        _trace "dir of ${dir} is existed, skip mkdir."
         return 0
     else
-	_trace "mkdir ${dir}"
-	mkdir -p ${dir}
-	return $?
+	    _trace "mkdir ${dir}"
+        mkdir -p ${dir}
+        return $?
     fi
 }
 
@@ -68,9 +68,9 @@ function _parse_options()
             	shift 2
             	;;
             -f|--file)
-		g_ELASTICSOFT="${2}"
-		shift 2
-		;;
+                g_ELASTICSOFT="${2}"
+                shift 2
+                ;;
             -h|--help)
             	usage
             	exit
@@ -109,7 +109,7 @@ if [ -f "$g_ELASTICSOFT" ]; then
         _trace "Install elasticsearch success."
     else
         _print_fatal "Install elasticsearch failed, please check it yourself!"
-	exit 1
+        exit 1
     fi
 fi
 
