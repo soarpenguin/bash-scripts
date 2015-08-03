@@ -1,0 +1,84 @@
+#!/bin/sh
+#
+# nginx - this script start and stop the nginx daemon
+#
+# chkconfig: 2345 55 25
+# description: Startup script for nginx
+# processname: nginx
+# config: /usr/local/nginx/conf/nginx.conf
+# pidfile: /var/run/nginx.pid
+#
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+#set -x
+export PS4='+ [`basename ${BASH_SOURCE[0]}`:$LINENO ${FUNCNAME[0]} \D{%F %T} $$ ] '
+
+MYNAME="${0##*/}"
+CURDIR=$(cd "$(dirname "$0")"; pwd)
+PROG="nginx"
+DAEMON="$CURDIR/sbin/$PROG"
+CONFIGFILE="$CURDIR/conf/$PROG.conf"
+PIDFILE="/var/run/${PROG}.pid"
+SCRIPTNAME="${CURDIR}/sbin/${MYNAME}"
+LOCKFILE=/var/lock/nginx.lock
+
+uid=`id -u`
+if [ $uid -ne '0' ]; then
+    echo "Please run this program in root privilege!"
+    exit 1
+fi
+
+set -e
+[ -x "$DAEMON" ] || exit 0
+
+start() {
+    echo "Startting Nginx......"
+    [ -x $DAEMON ] || exit 5
+    [ -f $CONFIGFILE ] || exit 6
+    $DAEMON -c $CONFIGFILE || echo -n "Nginx already running!"
+    [ $? -eq 0 ] && touch $LOCKFILE
+}
+
+stop() {
+    echo "Stopping Nginx......"
+    MPID=`ps aux | grep nginx | awk '/master/{print $2}'`
+    if [ "${MPID}X" != "X" ]; then
+        kill -QUIT $MPID
+        [ $? -eq 0 ] && rm -f $LOCKFILE
+    else
+        echo "Nginx server is not running!"
+    fi
+}
+
+reload() {
+    echo "Reloading Nginx......"
+    MPID=`ps aux | grep nginx | awk '/master/{print $2}'`
+    if [ "${MPID}X" != "X" ]; then
+        kill -HUP $MPID
+    else
+        echo "Nginx can't reload!"
+    fi
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    reload)
+        reload
+        ;;
+    restart)
+        stop
+        sleep 1
+        start
+        ;;
+    *)
+        echo "Usage: $SCRIPTNAME {start|stop|reload|restart}"
+        exit 3
+        ;;
+esac
+
+exit 0
