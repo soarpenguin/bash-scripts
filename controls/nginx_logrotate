@@ -6,7 +6,7 @@ CURDIR=$(cd "$(dirname "$0")"; pwd)
 
 # set file path
 NGINX_ACCESS_LOG="${CURDIR}/logs/nginx-access.log"
-NGINX_ERROR_LOG="${CURDIR}/log/nginx-error.log"
+NGINX_ERROR_LOG="${CURDIR}/logs/nginx-error.log"
 
 # rename log
 mv $NGINX_ACCESS_LOG $NGINX_ACCESS_LOG.`date -d yesterday +%Y%m%d`
