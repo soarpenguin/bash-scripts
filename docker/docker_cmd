@@ -1,0 +1,75 @@
+################## image ################
+#pull image
+docker pull ubuntu:12.04
+docker pull dl.dockerpool.com:5000/ubuntu:12.04
+
+#list image
+docker images
+
+#create image
+#             -m "comment"        -a "creater"     "parent docker id"  "repo/version" 
+docker commit -m "Added json gem" -a "Docker Newbee" 0b2616b0e5a8  ouruser/sinatra:v2
+# edit Dockerfile in ./
+docker build -t="ouruser/sinatra:v2" .
+# create image from local file of ubuntu-14.04-x86_64-minimal.tar.gz
+cat ubuntu-14.04-x86_64-minimal.tar.gz  |docker import - ubuntu:14.04
+
+#run image
+docker run -t -i ubuntu:12.04 /bin/bash
+
+# push docker image to repo
+docker push ouruser/sinatra
+
+# save a image from running container
+docker images
+docker save -o ubuntu_14.04.tar ubuntu:14.04
+# run container from file ubuntu_14.04.tar
+docker load --input ubuntu_14.04.tar
+docker load < ubuntu_14.04.tar
+
+# remove container and image
+# docker rm :rm container  
+docker rmi training/sinatra
+
+# remove local not taged image
+docker rmi $(docker images -q -f "dangling=true")
+
+############## container #############
+docker run -t -i ubuntu:14.04 /bin/bash
+docker run ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
+
+# list running container
+docker ps 
+docker logs [container ID or NAMES]
+# list all container running/stoped
+docker ps -a
+
+docker start
+docker restart
+# login running container
+docker attach
+
+# export and import
+docker export 7691a814370e > ubuntu.tar
+cat ubuntu.tar | sudo docker import - test/ubuntu:v1.0
+
+############## registry #############
+docker run -d -p 5000:5000 \
+           -v /home/user/registry-conf:/registry-conf \
+		   -e DOCKER_REGISTRY_CONFIG=/registry-conf/config.yml \
+		   registry
+
+docker run \
+         -e SETTINGS_FLAVOR=s3 \
+         -e AWS_BUCKET=acme-docker \
+         -e STORAGE_PATH=/registry \
+         -e AWS_KEY=AKIAHSHB43HS3J92MXZ \
+         -e AWS_SECRET=xdDowwlK7TJajV1Y7EoOZrmuPEJlHYcNP2k4j49T \
+         -e SEARCH_BACKEND=sqlalchemy \
+         -p 5000:5000 \
+         registry
+		 
+# -v pointed registry store dir
+docker run -d -p 5000:5000 \
+         -v /opt/data/registry:/tmp/registry 
+		 registry
