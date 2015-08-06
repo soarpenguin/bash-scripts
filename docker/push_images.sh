@@ -65,7 +65,7 @@ function parse_options()
     	case $1 in
     	    -r|--registry)
     		    registry="$2"
-                _is_null "$INVENTORY"
+                _is_null "$registry"
     			shift 2
     			;;
     		-V|--version)

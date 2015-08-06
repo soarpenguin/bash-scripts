@@ -54,6 +54,12 @@ docker export 7691a814370e > ubuntu.tar
 cat ubuntu.tar | sudo docker import - test/ubuntu:v1.0
 
 ############## registry #############
+# install local registry
+#$ sudo apt-get install build-essential python-dev libevent-dev python-pip libssl-dev liblzma-dev libffi-dev
+#$ git clone https://github.com/docker/docker-registry.git
+#$ cd docker-registry
+#$ sudo python setup.py install
+
 docker run -d -p 5000:5000 \
            -v /home/user/registry-conf:/registry-conf \
 		   -e DOCKER_REGISTRY_CONFIG=/registry-conf/config.yml \
