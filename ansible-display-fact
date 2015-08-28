@@ -1,0 +1,8 @@
+#!/bin/sh
+
+HOST_PATTERN="$1"
+FACT="$2"
+
+ansible -i hosts ${HOST_PATTERN} -m setup -a "filter=$FACT" | \
+    awk '/\| .* =>/     { printf "%-40s", $1 ":" }
+         /"'$FACT'":/   { print $2, $3, $4, $5, $6, $7, $8, $9 }'
