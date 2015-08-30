@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+USER=`whoami`
+CURDIR=$(cd "$(dirname "$0")"; pwd);
+PREFIXDIR="/home/${USER}/huicui/tengine"
+
+sudo yum install pcre-devel pcre -y
+sudo yum install openssl openssl-devel -y
+sudo yum install jemalloc jemalloc-devel -y
+
+id=`id -u`
+if [ x"$id" = "x0" ]; then
+    su - ${USER};
+fi
+cd ${CURDIR}
+
+wget -c http://tengine.taobao.org/download/tengine-2.0.3.tar.gz
+tar zxf tengine-2.0.3.tar.gz
+cd tengine-2.0.3
+./configure --prefix="${PREFIXDIR}" \
+--user=${USER} \
+--group=${USER} \
+--with-http_stub_status_module \
+--without-http-cache \
+--with-http_ssl_module \
+--with-http_gzip_static_module \
+--with-http_concat_module \
+--with-jemalloc
+ 
+CPU_NUM=$(cat /proc/cpuinfo | grep processor | wc -l)
+if [ $CPU_NUM -gt 1 ];then
+    make -j$CPU_NUM
+else
+    make
+fi
+make install
+
+cp ${CURDIR}/nginx_* "${PREFIXDIR}/"
