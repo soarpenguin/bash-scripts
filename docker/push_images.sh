@@ -60,37 +60,37 @@ USAGE
 function parse_options()
 {
     local argv=()
-    
+
     while [[ $# -gt 0 ]]; do
-    	case $1 in
-    	    -r|--registry)
-    		    registry="$2"
+        case $1 in
+            -r|--registry)
+                registry="$2"
                 _is_null "$registry"
-    			shift 2
-    			;;
-    		-V|--version)
-    			echo "$MYNAME: $version"
-    			exit
-    			;;
-    		-h|--help)
-    			usage
-    			exit
-    			;;
-    		--)
-    			shift
+                shift 2
+                ;;
+            -V|--version)
+                echo "$MYNAME: $version"
+                exit
+                ;;
+            -h|--help)
+                usage
+                exit
+                ;;
+            --)
+                shift
                 argv=("${argv[@]}" "${@}")
-    			break
-    			;;
-    		-*)
-    			_report_err "command line: unrecognized option $1"
-    			return 1
-    			;;
-    		*)
-    			argv+=($1)
-    			shift
-    			;;
-    	esac
-    done 
+                break
+                ;;
+            -*)
+                _report_err "command line: unrecognized option $1"
+                return 1
+                ;;
+            *)
+                argv+=($1)
+                shift
+                ;;
+        esac
+    done
 
     case ${#argv[@]} in
         0)
