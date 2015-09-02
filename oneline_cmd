@@ -105,6 +105,13 @@ ifconfig eth0 up
 #lookup dns use local dns service 8.8.8.8
 dig www.google.com @8.8.8.8
 
+#get version of bind
+dig @8.8.8.8 version.bind chaos txt
+#hide bind version option in named.conf
+#option {
+#    version "I don't tell you my version.";
+#};
+
 ################## kernel compile ##################
 # BIOS  -> MBR
 #          grub  -> kernel(bzImage) /boot/vmlinuz-3.2.0-74-generic-pae
