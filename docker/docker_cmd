@@ -89,6 +89,10 @@ docker run -d -P --name web -v /webapp training/webapp python app.py
 docker run -d -p 5000:5000 training/webapp python app.py
 docker run -d -p 127.0.0.1:5000:5000 training/webapp python app.py
 
+# -ip: appoint a ip to docker container.
+docker run -d -p 127.0.0.1:5000:5000 --ip=10.10.10.10 training/webapp python app.py
+
 docker search centos
 # look for container info.
 docker inspect web
+
