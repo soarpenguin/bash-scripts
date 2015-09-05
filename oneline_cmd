@@ -102,6 +102,8 @@ ifconfig eth0 mtu 1500
 ifconfig eth0 down
 ifconfig eth0 up
 
+#dig command usage.
+dig [@server] domain [query-type] [query-class] [+query-option] [-dig-option] [%comment]
 #lookup dns use local dns service 8.8.8.8
 dig www.google.com @8.8.8.8
 
@@ -111,6 +113,10 @@ dig @8.8.8.8 version.bind chaos txt
 #option {
 #    version "I don't tell you my version.";
 #};
+
+nslookup [-option...] [host-to-find | - [server]]
+
+named-checkconf [-jvz] [-t directory] [filename]
 
 ################## kernel compile ##################
 # BIOS  -> MBR
