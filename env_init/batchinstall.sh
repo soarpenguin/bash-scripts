@@ -142,7 +142,7 @@ if [ ! -e $g_LIST ]; then
 fi
 
 
-for cmd in apt-get yum port brew pacman; do
+for cmd in apt-get dnf yum port brew pacman; do
     if command -v $cmd >/dev/null; then
         package_manager="$cmd"
         break

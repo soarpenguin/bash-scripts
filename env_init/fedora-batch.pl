@@ -109,7 +109,7 @@ if($list) {
 }
 
 # set install command.
-my @commands = ("yum", "apt-get", "aptitude");
+my @commands = ("dnf", "yum", "apt-get", "aptitude", "brew", "port", "pacman");
 my (@array, $found);
 
 if(! $command) {
