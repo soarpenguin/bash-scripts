@@ -240,3 +240,5 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 
 #git rollback version
 #git reset --hard 931c6a6
+
+screen -c ~/.screenrc -D -RR screenname
