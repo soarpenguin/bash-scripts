@@ -242,3 +242,7 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #git reset --hard 931c6a6
 
 screen -c ~/.screenrc -D -RR screenname
+
+#vim cmd find symble of funcname and display all symble info.
+#:cs find s funcname
+#:cw
