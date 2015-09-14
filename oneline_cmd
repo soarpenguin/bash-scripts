@@ -241,8 +241,11 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #git rollback version
 #git reset --hard 931c6a6
 
-screen -c ~/.screenrc -D -RR screenname
+#screen -c ~/.screenrc -D -RR screenname
 
 #vim cmd find symble of funcname and display all symble info.
 #:cs find s funcname
 #:cw
+
+#cat json.txt | python -m json.tool
+#python -m SimpleHTTPServer
