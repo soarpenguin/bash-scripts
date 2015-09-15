@@ -42,6 +42,7 @@ docker run ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; do
 # list running container
 docker ps 
 docker logs [container ID or NAMES]
+docker logs -f [container ID or NAMES]
 # list all container running/stoped
 docker ps -a
 
