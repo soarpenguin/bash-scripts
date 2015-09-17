@@ -96,4 +96,6 @@ docker run -d -p 127.0.0.1:5000:5000 --ip=10.10.10.10 training/webapp python app
 docker search centos
 # look for container info.
 docker inspect web
+docker inspect --format='{{.NetworkSettings.IPAddress}}' $INSTANCE_ID
+docker inspect --format='{{.LogPath}}' $INSTANCE_ID
 
