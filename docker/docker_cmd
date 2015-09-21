@@ -99,3 +99,4 @@ docker inspect web
 docker inspect --format='{{.NetworkSettings.IPAddress}}' $INSTANCE_ID
 docker inspect --format='{{.LogPath}}' $INSTANCE_ID
 
+docker info
