@@ -28,6 +28,9 @@ docker save -o ubuntu_14.04.tar ubuntu:14.04
 docker load --input ubuntu_14.04.tar
 docker load < ubuntu_14.04.tar
 
+# docker rm stoped containers.
+docker rm $(docker ps -a -q)
+
 # remove container and image
 # docker rm :rm container  
 docker rmi training/sinatra
@@ -38,6 +41,7 @@ docker rmi $(docker images -q -f "dangling=true")
 ############## container #############
 docker run -t -i ubuntu:14.04 /bin/bash
 docker run ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
+docker run -it -rm --privileged --name container -v "/opt/data:/opt/data" e8a42b86da11 /bin/bash
 
 # list running container
 docker ps 
@@ -82,6 +86,8 @@ docker run -d -p 5000:5000 \
          -v /opt/data/registry:/tmp/registry 
 		 registry
 
+docker -d -g /opt/youku/docker --insecure-registry index.tenxcloud.com
+
 # -v: pointed data volume /webapp to container.
 # -P: random map port to outside of container.
 docker run -d -P --name web -v /webapp training/webapp python app.py
@@ -98,5 +104,6 @@ docker search centos
 docker inspect web
 docker inspect --format='{{.NetworkSettings.IPAddress}}' $INSTANCE_ID
 docker inspect --format='{{.LogPath}}' $INSTANCE_ID
+docker inspect --format '{{.Config.Env}}' $INSTANCE_ID
 
 docker info
