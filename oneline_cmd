@@ -241,6 +241,12 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #git rollback version
 #git reset --hard 931c6a6
 
+#look a file edit log for every commit.
+#git log -p filename
+#
+#look a file commit log of every line.
+#git blame
+
 #screen -c ~/.screenrc -D -RR screenname
 
 #vim cmd find symble of funcname and display all symble info.
