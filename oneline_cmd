@@ -247,6 +247,14 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #look a file commit log of every line.
 #git blame
 
+#git make patch file and apply patch.
+#git checkout Fix
+#edit code and commit.
+#git format-patch -M git-branch
+#
+#git patch "git format-patch"
+#git am filename.patch
+
 #screen -c ~/.screenrc -D -RR screenname
 
 #vim use pointed vimrc.
