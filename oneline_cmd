@@ -249,6 +249,9 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 
 #screen -c ~/.screenrc -D -RR screenname
 
+#vim use pointed vimrc.
+# vim -u ~/vimrc filename
+
 #vim cmd find symble of funcname and display all symble info.
 #:cs find s funcname
 #:cw
