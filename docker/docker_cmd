@@ -14,9 +14,10 @@ docker build -t="ouruser/sinatra:v2" .
 # create image from local file of ubuntu-14.04-x86_64-minimal.tar.gz
 cat ubuntu-14.04-x86_64-minimal.tar.gz  |docker import - ubuntu:14.04
 
-#run image
-#-t:open terminal  -i:open input
-docker run -t -i ubuntu:12.04 /bin/bash
+#docker run image
+#docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+#    options: -t:open terminal  -i:open input
+docker run -t -i ubuntu:12.04 /bin/boptions
 
 # push docker image to repo
 docker push ouruser/sinatra
@@ -34,6 +35,9 @@ docker rm $(docker ps -a -q)
 # remove container and image
 # docker rm :rm container  
 docker rmi training/sinatra
+
+# docker tag images
+docker tag [OPTIONS] IMAGE[:TAG] [REGISTRYHOST/][USERNAME/]NAME[:TAG]
 
 # remove local not taged image
 docker rmi $(docker images -q -f "dangling=true")
@@ -91,6 +95,10 @@ docker -d -g /opt/youku/docker --insecure-registry index.tenxcloud.com
 # -v: pointed data volume /webapp to container.
 # -P: random map port to outside of container.
 docker run -d -P --name web -v /webapp training/webapp python app.py
+
+# -u: run the container with user_id:group_id (1000:1000).
+# -e: run the container with env bash parameter MYSECET(no).
+docker run -d -u 1000:1000 -e MYSECET=no -v /webapp training/webapp python app.py
 
 # -p: map local port of 5000 to container port of 5000.
 docker run -d -p 5000:5000 training/webapp python app.py
