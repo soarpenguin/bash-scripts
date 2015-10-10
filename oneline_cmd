@@ -174,9 +174,14 @@ mount /dev/md0 /mnt
 vmstat 2 10
 iostat 2 10
 mpstat 2 10
-sar
 slabtop
 slabtop -o | grep -E '(^  OBJS|tw_sock_TCP|tcp_bind_bucket)'
+
+## sar usage
+sar
+# read sar statistic data from file /var/log/sa/sa01
+sar -r -n DEV -f /var/log/sa/sa01
+sar -r -n SOCK -f /var/log/sa/sa01
 
 #trace network syscall for a existed PID.
 strace -p $PID -f -e trace=network -s 10000
@@ -238,6 +243,7 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #gem install cocoapods
 #pod install --verbose
 
+################## git usage ##################
 #git rollback version
 #git reset --hard 931c6a6
 
@@ -247,13 +253,21 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #look a file commit log of every line.
 #git blame
 
-#git make patch file and apply patch.
+## git make patch file and apply patch
 #git checkout Fix
-#edit code and commit.
-#git format-patch -M git-branch
+#   edit code and commit.
+#git format-patch -M master
 #
 #git patch "git format-patch"
 #git am filename.patch
+
+## develop at ansible
+#git clone https://github.com/soarpenguin/ansible.git ansible
+#cd ansible && git remote add ansible https://github.com/ansible/ansible.git
+#git checkout -b bugfix ansible/devel && git pull
+#   edit code and commit
+#git push origin bugfix:bugfix
+#   github pull request
 
 #screen -c ~/.screenrc -D -RR screenname
 
