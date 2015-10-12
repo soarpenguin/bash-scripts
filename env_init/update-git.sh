@@ -19,13 +19,19 @@ if [ -t 1 ]
 then
     RED="$( echo -e "\e[31m" )"
     HL_RED="$( echo -e "\e[31;1m" )"
+    HL_GREEN="$( echo -e "\e[32;1m" )"
     HL_BLUE="$( echo -e "\e[34;1m" )"
 
     NORMAL="$( echo -e "\e[0m" )"
 fi
 
 _hl_red()    { echo "$HL_RED""$@""$NORMAL";}
+_hl_green()  { echo "$HL_GREEN""$@""$NORMAL";}
 _hl_blue()   { echo "$HL_BLUE""$@""$NORMAL";}
+
+_notice() {
+    echo $(_hl_green '  =>') "$@" >&2
+}
 
 _trace() {
     echo $(_hl_blue '  ->') "$@" >&2
@@ -45,6 +51,7 @@ if [ -d ${DESTDIR} ]; then
     for d in `ls`; do
         UPDATEDIR="${DESTDIR}/${d}"
         if [[ -d "${UPDATEDIR}" && -d "${UPDATEDIR}/.git" ]]; then
+            _notice "Start update code in ${UPDATEDIR} ..."
             cd "${UPDATEDIR}" && git pull
 
             if [ $? -eq 0 ]; then
