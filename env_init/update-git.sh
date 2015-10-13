@@ -9,6 +9,8 @@ CURDIR=$(cd "$(dirname "$0")"; pwd);
 MYNAME="${0##*/}"
 DESTDIR="${CURDIR}/cprogram"
 
+DESTDIR="${1-${DESTDIR}}"
+
 RET_OK=0
 RET_FAIL=1
 
