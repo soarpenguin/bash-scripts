@@ -169,3 +169,23 @@ __detect_color_support() {
 }
 __detect_color_support
 
+
+########################################################################
+# set DOITPROG to echo to test this script
+
+# Don't use :- since 4.3BSD and earlier shells don't like it.
+doit="${DOITPROG-}"
+
+# Make a couple of temp file names in the proper directory.
+
+    dsttmp=/tmp/#inst.$$#
+    rmtmp=/tmp/#rm.$$#
+
+# Trap to clean up temp files at exit.
+
+    trap 'status=$?; rm -f "$dsttmp" "$rmtmp" && exit $status' 0
+    trap '(exit $?); exit' 1 2 13 15
+
+# Move or copy the file name to the temp name
+
+#    $doit cp "$src" "$dsttmp" &&
