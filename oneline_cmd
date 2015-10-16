@@ -255,7 +255,7 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 
 ## git make patch file and apply patch
 #git checkout Fix
-#   edit code and commit.
+#  edit code and commit.
 #git format-patch -M master
 #
 #git patch "git format-patch"
@@ -280,3 +280,6 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 
 #cat json.txt | python -m json.tool
 #python -m SimpleHTTPServer
+#python -m py_compile *.py
+#python -m compileall dirname
+#python -m pdb *.py
