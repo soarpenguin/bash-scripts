@@ -41,6 +41,8 @@ screen bash
 #usage for screenrc
 #screen -c ~/screenrc -D -RR sname
 #screen -drUA sname
+#screen -X quit -S sname
+#screen -wipe -S sname
 #
 #For kill dead session window.
 #Ctrl+a K or Ctrl+a Ctrl+k
