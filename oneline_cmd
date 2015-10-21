@@ -168,6 +168,8 @@ mount /dev/md0 /mnt
 #mysql -u* -h* -p -P3306 -e "show databases" | sed -n '2,$p' | xargs -l DB 'mysqldump DB > DB.sql';
 #mysqldump --add-drop-table -uroot -p nowait > backupfile.sql
 #mysql -uroot --default-character-set=utf8 -p
+#
+#alter table ip add index idx_ip(ip);
 
 #look for system perfermace.
 #cmd interval count
@@ -231,6 +233,7 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # sed -i 's/100000/500000/' edit-filename
 
 #shopt -s histappend; history -a
+#history -c  ;>/root/.bash_history
 
 # redis
 #$./redis-cli --latency -h '127.0.0.1' -p '6379'
