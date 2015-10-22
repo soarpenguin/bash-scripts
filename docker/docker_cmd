@@ -104,6 +104,8 @@ docker run -d -u 1000:1000 -e MYSECET=no -v /webapp training/webapp python app.p
 docker run -d -p 5000:5000 training/webapp python app.py
 docker run -d -p 127.0.0.1:5000:5000 training/webapp python app.py
 
+docker run -d --net="host" --name web -p 127.0.0.1:5000:5000 -v /opt/web:/web training/webapp python app.py
+
 # -ip: appoint a ip to docker container.
 docker run -d -p 127.0.0.1:5000:5000 --ip=10.10.10.10 training/webapp python app.py
 
