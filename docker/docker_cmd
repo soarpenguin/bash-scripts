@@ -25,6 +25,7 @@ docker push ouruser/sinatra
 # save a image from running container
 docker images
 docker save -o ubuntu_14.04.tar ubuntu:14.04
+docker save mynewimage > /tmp/mynewimage.tar
 # run container from file ubuntu_14.04.tar
 docker load --input ubuntu_14.04.tar
 docker load < ubuntu_14.04.tar
