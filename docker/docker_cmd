@@ -26,6 +26,9 @@ docker push ouruser/sinatra
 docker images
 docker save -o ubuntu_14.04.tar ubuntu:14.04
 docker save mynewimage > /tmp/mynewimage.tar
+# save image id
+docker save 7fcb4e2b13fd > registry-v2.0.tar
+
 # run container from file ubuntu_14.04.tar
 docker load --input ubuntu_14.04.tar
 docker load < ubuntu_14.04.tar
@@ -37,8 +40,9 @@ docker rm $(docker ps -a -q)
 # docker rm :rm container  
 docker rmi training/sinatra
 
-# docker tag images
+# docker tag images: (rename REPOSITORY and TAG)
 docker tag [OPTIONS] IMAGE[:TAG] [REGISTRYHOST/][USERNAME/]NAME[:TAG]
+docker tag 7fcb4e2b13fd youku/registry:v2.0
 
 # remove local not taged image
 docker rmi $(docker images -q -f "dangling=true")
