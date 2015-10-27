@@ -122,3 +122,6 @@ docker inspect --format='{{.LogPath}}' $INSTANCE_ID
 docker inspect --format '{{.Config.Env}}' $INSTANCE_ID
 
 docker info
+
+# adds a trigger to the metadata of the image being built
+# ONBUILD ADD . /app/src
