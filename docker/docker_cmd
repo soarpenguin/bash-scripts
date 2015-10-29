@@ -21,6 +21,7 @@ docker run -t -i ubuntu:12.04 /bin/boptions
 
 # push docker image to repo
 docker push ouruser/sinatra
+docker push 10.10.10.10:5000/ouruser/sinatra:v2.0
 
 # save a image from running container
 docker images
@@ -42,7 +43,9 @@ docker rmi training/sinatra
 
 # docker tag images: (rename REPOSITORY and TAG)
 docker tag [OPTIONS] IMAGE[:TAG] [REGISTRYHOST/][USERNAME/]NAME[:TAG]
-docker tag 7fcb4e2b13fd youku/registry:v2.0
+docker tag 7fcb4e2b13fd ab/registry:v2.0
+# docker rm tag
+docker rmi ab/registry:v2.0
 
 # remove local not taged image
 docker rmi $(docker images -q -f "dangling=true")
