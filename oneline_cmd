@@ -282,8 +282,13 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #   edit code and commit
 #git push origin bugfix:bugfix
 #   github pull request
+#git clone git recursive.
+#   git clone --recursive https://github.com/XiaoMi/open-falcon.git
 
 #screen -c ~/.screenrc -D -RR screenname
+#screen -drUA screenname
+# remove and destroy a screen session.
+#screen -wipe screenname
 
 #vim use pointed vimrc.
 # vim -u ~/vimrc filename
