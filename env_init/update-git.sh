@@ -54,7 +54,7 @@ if [ -d ${DESTDIR} ]; then
         UPDATEDIR="${DESTDIR}/${d}"
         if [[ -d "${UPDATEDIR}" && -d "${UPDATEDIR}/.git" ]]; then
             _notice "Start update code in ${UPDATEDIR} ..."
-            cd "${UPDATEDIR}" && git pull
+            cd "${UPDATEDIR}" && git pull --recurse-submodules
 
             if [ $? -eq 0 ]; then
                 _trace "Update code in ${UPDATEDIR} succ."

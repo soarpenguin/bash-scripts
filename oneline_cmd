@@ -284,6 +284,11 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #   github pull request
 #git clone git recursive.
 #   git clone --recursive https://github.com/XiaoMi/open-falcon.git
+#   git pull --recurse-submodules
+#
+#git su
+#   git submodule add https://github.com/XiaoMi/open-falcon.git open-falcon
+#   git submodule update --init --recursive
 
 #screen -c ~/.screenrc -D -RR screenname
 #screen -drUA screenname
