@@ -43,6 +43,11 @@ screen bash
 #screen -drUA sname
 #screen -X quit -S sname
 #screen -wipe -S sname
+#screen -ls
 #
 #For kill dead session window.
 #Ctrl+a K or Ctrl+a Ctrl+k
+#Create a new session window
+#Ctrl+a c
+#Next or Previous window
+#Ctrl+a n or Ctrl+a p
