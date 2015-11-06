@@ -1,10 +1,10 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 一般设定
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 将 pathogen 自身也置于独立目录中，需指定其路径 
+" 将 pathogen 自身也置于独立目录中，需指定其路径
 "runtime bundle/pathogen/autoload/pathogen.vim
 " 运行 pathogen
-"execute pathogen#infect()
+execute pathogen#infect()
 
 " 设定默认解码
 set fenc=utf-8
@@ -17,6 +17,7 @@ syntax enable
 set background=light
 "colorscheme solarized
 "colorscheme evening
+colorscheme molokai
 
 let mapleader=","
 let g:mapleader=","
@@ -31,7 +32,7 @@ set fdm=indent
 set history=100
 
 set cc=80
-set cursorcolumn
+"set cursorcolumn
 let g:indent_guides_guide_size=1
 
 " 在处理未保存或只读文件的时候，弹出确认
@@ -480,3 +481,6 @@ endfunction
 au VimEnter * nested :call LoadSession()
 au VimLeave * :call MakeSession()
 "---------------------------------------------------------------
+
+let g:go_disable_autoinstall = 0
+let g:neocomplete#enable_at_startup = 1
