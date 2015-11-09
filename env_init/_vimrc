@@ -4,7 +4,25 @@
 " 将 pathogen 自身也置于独立目录中，需指定其路径
 "runtime bundle/pathogen/autoload/pathogen.vim
 " 运行 pathogen
-execute pathogen#infect()
+"execute pathogen#infect()
+
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+""" add plugin 'pluginname'
+""" Run :PluginInstall in vim
+Plugin 'fatih/vim-go'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
 
 " 设定默认解码
 set fenc=utf-8
@@ -12,12 +30,13 @@ set fencs=utf-8,usc-bom,euc-jp,gb18030,gbk,gb2312,cp936
 
 "set fonts
 "set guifont=Monospace\ 11
-set guifont=Nimbus\ Mono\ L\ Regular\ Oblique\ 10
+"set guifont=Nimbus\ Mono\ L\ Regular\ Oblique\ 10
+set guifont=Courier\ New\ Italic
 syntax enable
 set background=light
 "colorscheme solarized
 "colorscheme evening
-colorscheme molokai
+"colorscheme molokai
 
 let mapleader=","
 let g:mapleader=","
@@ -32,7 +51,8 @@ set fdm=indent
 set history=100
 
 set cc=80
-"set cursorcolumn
+set cursorline
+set cursorcolumn
 let g:indent_guides_guide_size=1
 
 " 在处理未保存或只读文件的时候，弹出确认
