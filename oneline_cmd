@@ -307,3 +307,5 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #python -m py_compile *.py
 #python -m compileall dirname
 #python -m pdb *.py
+
+#/usr/local/bin/inotifywait -mrq --timefmt %d/%m/%y %H:%M --format %T %w%f -e modify,delete,create,attrib /etc/sysctl.conf
