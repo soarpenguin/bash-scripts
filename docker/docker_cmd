@@ -92,6 +92,8 @@ docker run \
          -e SEARCH_BACKEND=sqlalchemy \
          -p 5000:5000 \
          registry
+
+curl -v -X GET http://127.0.0.1:5000/v2/username/registry/tags/list
 		 
 # -v pointed registry store dir
 docker run -d -p 5000:5000 \
@@ -129,3 +131,29 @@ docker info
 
 # adds a trigger to the metadata of the image being built
 # ONBUILD ADD . /app/src
+
+####  add auth for private docker registry.
+htpasswd -c /opt/nginx/auth/docker-registry.htpasswd test
+
+openssl genrsa -out dockerCA.key 2048
+openssl req -x509 -new -nodes -key dockerCA.key -days 3650 -out dockerCA.crt
+openssl genrsa -out registry.cmdb.test.net 2048
+############################## Don’t provide a challenge password.
+openssl genrsa -out registry.cmdb.test.net.key 2048
+openssl req -new -key registry.cmdb.test.net.key -out registry.cmdb.test.net.csr
+openssl x509 -req -in registry.cmdb.test.net.csr -CA dockerCA.crt -CAkey dockerCA.key -CAcreateserial -out registry.cmdb.test.net.crt -days 3650
+openssl x509 -req -in registry.cmdb.test.net.csr -CA dockerCA.crt -CAkey dockerCA.key -CAcreateserial -out registry.cmdb.test.net.crt -days 3650
+
+update-ca-trust enable
+cp dockerCA.crt /etc/pki/ca-trust/source/anchors/
+update-ca-trust extract
+
+curl -v -X GET https://test:test@registry.cmdb.test.net/v2/jituan/base_registry_registry/tags/list --insecure
+
+update-ca-trust enable
+mkdir -p /etc/docker/certs.d/registry.cmdb.test.net/
+\cp dockerCA.crt /etc/docker/certs.d/registry.cmdb.test.net/ca.crt
+update-ca-trust extract
+
+docker login --username='test' --password='test' --email="chris.koller@dropbit.ch" https://registry.cmdb.test.net
+docker login --username='test' --password='test' --email="chris.koller@dropbit.ch" https://registry.cmdb.test.net/v2/
