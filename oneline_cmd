@@ -309,3 +309,6 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #python -m pdb *.py
 
 #/usr/local/bin/inotifywait -mrq --timefmt %d/%m/%y %H:%M --format %T %w%f -e modify,delete,create,attrib /etc/sysctl.conf
+#
+#remove redundant zero of 010.105.028.072, get 10.105.28.72
+#head ip.txt | perl -F'\.' -alne 'print join ".", map{sprintf "%d",$_}@F'
