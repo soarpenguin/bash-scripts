@@ -312,3 +312,6 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #
 #remove redundant zero of 010.105.028.072, get 10.105.28.72
 #head ip.txt | perl -F'\.' -alne 'print join ".", map{sprintf "%d",$_}@F'
+#
+#nohup mesos-slave --master=zk://10.103.11.27:2181,10.103.11.32:2181,10.103.11.33:2181/mesos --log_dir=/opt/mesos-slave/log --work_dir=/opt/mesos-slave/data --appc_store_dir=/opt/mesos-slave/store/appc </dev/null >/dev/null 2>&1 &
+#nohup mesos-master --zk=zk://10.103.11.27:2181,10.103.11.32:2181,10.103.11.33:2181/mesos --log_dir=/opt/mesos-master/log --work_dir=/opt/mesos-master/data --no-hostname_lookup --cluster="mesoscluster"  --quorum=2 </dev/null >/dev/null 2>&1 &
