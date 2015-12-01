@@ -1,0 +1,245 @@
+!/bin/sh
+#
+# mesos_control <summary>
+# author: soarpenguin@gmail.com
+# description: Starts and stops a single mesos instance on this system
+#
+
+### BEGIN INIT INFO
+### END INIT INFO
+
+#
+# init.d / servicectl compatibility (openSUSE)
+#
+if [ -f /etc/rc.status ]; then
+    . /etc/rc.status
+    rc_reset
+fi
+
+#
+# Source function library.
+#
+if [ -f /etc/rc.d/init.d/functions ]; then
+    . /etc/rc.d/init.d/functions
+fi
+
+#set -x
+export PS4='+ [`basename ${BASH_SOURCE[0]}`:$LINENO ${FUNCNAME[0]} \D{%F %T} $$ ] '
+
+MYNAME="${0##*/}"
+PROG="mesos"
+CURDIR=$(cd "$(dirname "$0")"; pwd)
+PIDFILE="/var/run/${PROG}.pid"
+LOGFILE="/opt/log/${PROG}.log"
+EXEC="$PROG"
+MESOSTYPE=""
+ACTION=""
+
+ZK_INFO="zk://10.10.11.4:2181,10.10.11.5:2181,10.10.11.5:2181/mesos"
+
+[ -e /etc/sysconfig/$PROG ] && . /etc/sysconfig/$PROG
+
+usage() {
+    cat << USAGE
+Usage: bash ${MYNAME} [-h] -t type
+                 action {start|stop|status|restart|condrestart|try-restart|reload|force-reload}
+
+Mesos start/stop control scripts.
+
+Optional arguments:
+    -h, --help            show this help message and exit
+
+Require:
+    -t, --type {master,slave}
+                        mesos instance type, default: ""
+    action  {start|stop|status|restart|condrestart|try-restart|reload|force-reload}
+
+USAGE
+
+    exit 1
+}
+
+#
+# Parses command-line options.
+#  usage: parse_options "$@" || exit $?
+#
+parse_options() {
+    declare -a argv
+
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -t|--type)
+                MESOSTYPE="${2}"
+               shift 2
+               ;;
+            -h|--help)
+               usage
+               exit
+               ;;
+            --)
+               shift
+                argv=("${argv[@]}" "${@}")
+               break
+               ;;
+            -*)
+               echo "command line: unrecognized option $1" >&2
+               return 1
+               ;;
+            *)
+                argv=("${argv[@]}" "${1}")
+                shift
+                ;;
+        esac
+    done
+
+    case ${#argv[@]} in
+        1)
+            ACTION="${argv[0]}"
+            ;;
+        0|*)
+            usage 1>&2
+            return 1
+ ;;
+    esac
+}
+
+start() {
+    local EXEC_NAME="${PROG}-${MESOSTYPE}"
+
+    CMD="${EXEC_NAME} --log_dir=/opt/${EXEC_NAME}/log --work_dir=/opt/${EXEC_NAME}/data --no-hostname_lookup "
+
+    if [ x"$EXEC_NAME" == "xmesos-master" ]; then
+        CMD="$CMD --zk=${ZK_INFO} --quorum=2 --cluster=mesoscluster "
+    else
+        CMD="$CMD --master=${ZK_INFO} --appc_store_dir=/opt/${EXEC_NAME}/store/appc "
+    fi
+
+    echo -n $"Starting ${EXEC_NAME}: "
+    # if not running, start it up here, usually something like "daemon $exec"
+    daemon --pidfile ${PIDFILE} ${CMD}
+    #echo "daemon --pidfile ${PIDFILE} ${CMD}"
+    retval=$?
+    echo
+    #[ $retval -eq 0 ] && touch $lockfile
+    return $retval
+}
+
+stop() {
+    local EXEC_NAME="${PROG}-${MESOSTYPE}"
+
+    echo -n $"Stopping ${PROG}-${MESOSTYPE}: "
+    # stop it here, often "killproc $PROG"
+    killproc -p $PIDFILE -d 20 $EXEC_NAME
+    retval=$?
+    echo
+    #[ $retval -eq 0 ] && rm -f $lockfile
+    return $retval
+}
+
+pstatus () {
+    local EXEC_NAME="${PROG}-${MESOSTYPE}"
+
+    if pgrep -f "${EXEC_NAME}" >/dev/null; then
+        #echo "$PROG" running
+        return 0
+    fi
+    return 1
+}
+
+forcestop() {
+    local EXEC_NAME="${PROG}-${MESOSTYPE}"
+
+    echo "Force stopping ${EXEC_NAME}"
+    pkill $1 -f "${EXEC_NAME}"
+}
+
+forcerestart () {
+    local EXEC_NAME="${PROG}-${MESOSTYPE}"
+
+    stop
+    try=1
+    sleep 1
+    while pstatus; do
+        try=$((try + 1))
+        if [ $try -gt 3 ]; then
+            forcestop -9
+        else
+            forcestop
+        fi
+        echo "Waiting for ${EXEC_NAME} to die.."
+        sleep 5
+    done
+    start
+}
+
+restart() {
+    forcerestart
+}
+
+reload() {
+    restart
+}
+
+force_reload() {
+    restart
+}
+
+rh_status() {
+    local EXEC_NAME="${PROG}-${MESOSTYPE}"
+    # run checks to determine if the service is running or use generic status
+    status -p ${PIDFILE} ${EXEC_NAME}
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
+################################## main route #################################
+parse_options "${@}" || usage
+
+if [ x"$MESOSTYPE" == "x" ]; then
+    echo "Please provide mesos type(master, slave) to start.\n"
+    usage 1>&2
+    exit 1
+elif [[ x"$MESOSTYPE" != "xmaster" && x"$MESOSTYPE" != "xslave" ]]; then
+    echo "Please check mesos type(master, slave).\n"
+    usage 1>&2
+    exit 1
+fi
+
+EXEC="${PROG}-${MESOSTYPE}"
+PIDFILE="/var/run/${EXEC}.pid"
+
+case "${ACTION}" in
+    start)
+        rh_status_q && exit 0
+        ${ACTION}
+        ;;
+    stop)
+        rh_status_q || exit 0
+        ${ACTION}
+        pstatus && forcestop -9
+        ;;
+    restart)
+        ${ACTION}
+        ;;
+    reload)
+        rh_status_q || exit 7
+        ${ACTION}
+        ;;
+    force-reload)
+        force_reload
+        ;;
+    status)
+        rh_status
+        ;;
+    condrestart|try-restart)
+        rh_status_q || exit 0
+        restart
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+        exit 2
+esac
+exit $?
+
