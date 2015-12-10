@@ -11,7 +11,7 @@ LOGFILE="/opt/log/${PROG}.log"
 EXEC="$PROG"
 ACTION=""
 
-ZK_INFO="zk://10.10.11.4:2181,10.10.11.5:2181,10.10.11.5:2181/mesos"
+ZK_INFO="zk://10.10.11.3:2181,10.10.11.4:2181,10.10.11.5:2181/mesos"
 
 nohup "$CURDIR/mesos-consul" --zk=${ZK_INFO} --refresh=30s  &
 
