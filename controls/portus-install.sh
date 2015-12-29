@@ -24,9 +24,11 @@ make package
 popd 
 
 #
+rpm -ivh "${CURDIR}/galera-25.3.9-1.rhel6.el6.x86_64.rpm"
 if [ -d "${MariadbPath}/build" ]; then
     cd ${MariadbPath}/build
-    yum install -y MariaDB-10.1.9-el6-x86_64-*.rpm
+    #yum install -y MariaDB-10.1.9-el6-x86_64-*.rpm
+    rpm -ivh MariaDB-10.1.9-el6-x86_64-client.rpm MariaDB-10.1.9-el6-x86_64-common.rpm MariaDB-10.1.9-el6-x86_64-connect-engine.rpm MariaDB-10.1.9-el6-x86_64-devel.rpm MariaDB-10.1.9-el6-x86_64-server.rpm MariaDB-10.1.9-el6-x86_64-shared.rpm MariaDB-10.1.9-el6-x86_64-test.rpm
     service mysql restart
 else
     echo "==> Build mariadb first!!!"
@@ -35,7 +37,18 @@ fi
 popd
 
 ############## install ruby ###################
-yum install ruby ruby-devel rubygem-bundler
+yum remove -y ruby ruby-devel rubygem-bundler
+
+yum install -y libyaml.x86_64
+rpm -ivh "${CURDIR}/ruby-2.0.0.p598-1.el6.x86_64.rpm"
+yum install -y rubygems
+gem update --system
+
+if [ -f "${CURDIR}/bundler-1.11.2.gem" ]; then
+    gem install "${CURDIR}/bundler-1.11.2.gem"
+else
+    yum install -y rubygem-bundler
+fi
 
 ############## install ruby ###################
 #chmod +x ${CURDIR}/ibm-4.2.3.0-node-v4.2.3-linux-x64.bin
@@ -53,11 +66,15 @@ PortusPath="${CURDIR}/Portus"
 pushd . &>/dev/null
 if [ ! -d ${PortusPath} ]; then
     git clone https://github.com/SUSE/Portus.git ${PortusPath}
-    cd ${PortusPath}
-    bundle config build.nokogiri --use-system-libraries
-    bundle install
 fi
+
 cd ${PortusPath}
+bundle config build.nokogiri --use-system-libraries
+gem install rake -v '10.3.2'
+bundle config mirror.https://rubygems.org https://ruby.taobao.org
+bundle install
+
+#cd ${PortusPath}
 #yum install -y screen
 bundle exec rake db:create
 bundle exec rake db:migrate
