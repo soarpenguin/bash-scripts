@@ -251,6 +251,8 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # rpm -e -vv --nosignature elasticsearch-1.5.2-1  # skip signature uninstall
 # cd /var/lib/rpm && rm -rf __db* # rm lock file for rpm no respose.
 # rpm -ivh -vv --force --nosignature elasticsearch-1.5.1.rpm
+# rpm -qa | grep -i maria
+# rpm -e maria.rpm
 
 ### mac install cocoapods
 #pod guides: http://guides.cocoapods.org/
