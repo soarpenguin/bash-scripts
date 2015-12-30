@@ -50,6 +50,10 @@ docker rmi ab/registry:v2.0
 # remove local not taged image
 docker rmi $(docker images -q -f "dangling=true")
 
+# remove dead container
+umount /var/lib/docker/devicemapper/mnt/xxxxxxxxxxxxxxxxxxxxx
+rm -rf /var/lib/docker/devicemapper/mnt/xxxxxxxxxxxxxxxxxxxxx-init/
+
 ############## container #############
 docker run -t -i ubuntu:14.04 /bin/bash
 docker run ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
