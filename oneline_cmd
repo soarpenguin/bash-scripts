@@ -331,3 +331,7 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #virtualenv ./env
 #pip install --download <DIR> -r requirements.txt
 #$ pip install --no-index --find-links=[file://]<DIR> -r requirements.txt
+#
+# yum install download only
+#yum install -y yum-plugin-downloadonly
+#yum install --downloadonly --downloaddir=<directory> <package>
