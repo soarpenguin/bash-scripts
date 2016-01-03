@@ -161,3 +161,10 @@ update-ca-trust extract
 
 docker login --username='test' --password='test' --email="chris.koller@dropbit.ch" https://registry.cmdb.test.net
 docker login --username='test' --password='test' --email="chris.koller@dropbit.ch" https://registry.cmdb.test.net/v2/
+
+#### get container list from remote api.
+curl http://127.0.0.1:4243/containers/json | python -m json.tool
+#### get container stats from remote api.
+curl -s http://127.0.0.1:4243/containers/1c3b02900db9df0/stats?stream=false | python -m json.tool
+#### get container info from remote api.
+curl -s http://127.0.0.1:4243/containers/1c3b02900db9df0/json | python -m json.tool
