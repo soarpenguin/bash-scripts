@@ -335,3 +335,7 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # yum install download only
 #yum install -y yum-plugin-downloadonly
 #yum install --downloadonly --downloaddir=<directory> <package>
+#
+# update linux system time
+# date -s "20160107 18:57"
+# hwclock -w
