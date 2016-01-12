@@ -339,3 +339,5 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # update linux system time
 # date -s "20160107 18:57"
 # hwclock -w
+#
+# cut -d" " -f 1,2,42 /proc/*/stat | sort -n -k +3
