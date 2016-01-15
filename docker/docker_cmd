@@ -125,6 +125,10 @@ docker run -d --net="host" --name web -p 127.0.0.1:5000:5000 -v /opt/web:/web tr
 docker run -d -p 127.0.0.1:5000:5000 --ip=10.10.10.10 training/webapp python app.py
 
 docker search centos
+
+# list images in registry file system.
+tree "${BASE_DATA_DIR}/docker/registry/v2/repositories" -L 2
+
 # look for container info.
 docker inspect web
 docker inspect --format='{{.NetworkSettings.IPAddress}}' $INSTANCE_ID
