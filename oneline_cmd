@@ -341,3 +341,5 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # hwclock -w
 #
 # cut -d" " -f 1,2,42 /proc/*/stat | sort -n -k +3
+#
+# axel -n 99 http://42.62.11.196:81/openSUSE-Leap-42.1-DVD-x86_64.iso
