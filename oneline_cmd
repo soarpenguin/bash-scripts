@@ -343,3 +343,7 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # cut -d" " -f 1,2,42 /proc/*/stat | sort -n -k +3
 #
 # axel -n 99 http://42.62.11.196:81/openSUSE-Leap-42.1-DVD-x86_64.iso
+#
+# sudo brew install mtr
+# sudo /usr/local/Cellar/mtr/0.86/sbin/mtr -h
+# sudo /usr/local/Cellar/mtr/0.86/sbin/mtr --aslookup www.baidu.com
