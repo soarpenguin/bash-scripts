@@ -347,3 +347,10 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # sudo brew install mtr
 # sudo /usr/local/Cellar/mtr/0.86/sbin/mtr -h
 # sudo /usr/local/Cellar/mtr/0.86/sbin/mtr --aslookup www.baidu.com
+#
+# # nc send file
+# nc -l 1234 > filename.out
+# nc host.example.com 1234 < filename.in
+# # nc send dir
+# tar -cf - * | nc -l 4444
+# nc host.example.com 4444 | tar -xf -
