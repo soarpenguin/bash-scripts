@@ -76,6 +76,9 @@ docker start
 docker restart
 # login running container
 docker attach
+docker exec -it containerid /bin/bash
+
+# disconnect from docker container key map: Ctrl-p + Ctrl-q.
 
 # export and import
 docker export 7691a814370e > ubuntu.tar
