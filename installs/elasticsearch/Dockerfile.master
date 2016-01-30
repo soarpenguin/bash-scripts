@@ -1,0 +1,41 @@
+#################################################################################################
+#
+# Elasticsearch Dockerfile
+#
+
+#Get base image centos:v6.6
+#
+FROM centos:v6.6
+
+#Maitainer user infomation.
+#
+MAINTAINER soarpenguin <soarpenguin@gmail.com>
+
+#Set image type: master/datanode/monitor
+#determine which elasticsearch.yml will used.
+#
+ENV NODETYPE master
+
+#Install java package.
+#
+RUN yum install -y java-1.8.0-openjdk.x86_64
+
+# Define mountable directories.
+VOLUME ["/opt/"]
+
+RUN \
+  yum install -y git.x86_64 && \
+  cd / && \
+  git clone http://10.10.10.67/soarpenguin/elastic.git elasticsearch && \ 
+  bash /elasticsearch/elasticsearch-install.sh -t $NODETYPE && \
+  yum remove -y git.x86_64 && \
+  rm -rf /elasticsearch
+
+# Expose ports.
+#   - 9200: HTTP
+#   - 9300: transport
+EXPOSE 9200 9300
+
+# Define default command.
+CMD ["/etc/init.d/elasticsearch", "start"]
+
