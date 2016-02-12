@@ -43,6 +43,18 @@ echo -n "$n "
  
 : $[ n++ ]         # : $[ ++n ]] also works
 echo -n "$n "
- 
-echo
-exit 0
+
+# each array element
+fruits[0]=Apple
+fruits[1]="Desert fig"
+fruits[2]=Plum
+
+#for i in "${fruits[*]}" # all element for one element
+#for i in ${fruits[*]}   # for each element with space identity
+for i in "${fruits[@]}" # for each element
+do
+    echo $i;
+done
+
+# Adding elements into an array
+fruits=(Orange "${fruits[@]}" Banana Cherry)
