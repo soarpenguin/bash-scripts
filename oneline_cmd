@@ -354,3 +354,8 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # # nc send dir
 # tar -cf - * | nc -l 4444
 # nc host.example.com 4444 | tar -xf -
+#
+# sh difference of '[' and '[['.
+# http://mywiki.wooledge.org/BashFAQ/031
+#
+# trap '(read -p "[$BASH_SOURCE:$LINENO] $BASH_COMMAND?")' DEBUG
