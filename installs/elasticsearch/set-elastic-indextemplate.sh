@@ -125,13 +125,13 @@ curl -XPUT localhost:9200/_template/base -d '
           }
         },
         {
-          "string fields": {
+          "string_fields": {
             "mapping": {
-              "index": "analyzed",
+              "index": "not_analyzed",
               "omit_norms": true,
               "doc_values": true,
               "type": "string",
-			  "fields" : {
+              "fields" : {
                 "raw" : {
                   "index" : "not_analyzed",
                   "ignore_above" : 256,
@@ -145,9 +145,26 @@ curl -XPUT localhost:9200/_template/base -d '
         }
       ],
       "_all": {
-        "enabled": false
+        "enabled": true
       }
     }
+  }
+}
+'
+
+curl -XPUT localhost:9200/_template/kibana-int -d '
+{
+  "order": 1,
+  "template" : "kibana-int-*",
+  "settings": {
+    "index.number_of_replicas": "1",
+    "index.number_of_shards": "1",
+    "index.search.slowlog.threshold.query.warn": "10s",
+    "index.search.slowlog.threshold.query.info": "5s",
+    "index.search.slowlog.threshold.fetch.warn": "1s",
+    "index.search.slowlog.threshold.fetch.info": "800ms",
+    "index.indexing.slowlog.threshold.index.warn": "10s",
+    "index.indexing.slowlog.threshold.index.info": "5s"
   }
 }
 '
