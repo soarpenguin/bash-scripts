@@ -15,6 +15,9 @@
 #delete one index template(template_1)
 #curl -XDELETE localhost:9200/_template/template_1
 
+#check indices health statistics.
+#curl -XGET 'http://localhost:9200/_cluster/health?level=indices' | python -m json.tool
+
 curl -XPUT localhost:9200/_template/base -d '
 {
   "order": 1,
