@@ -53,6 +53,7 @@ service docker restart
 /sbin/chkconfig docker on
 
 ######### set docker privilege
+yum install -y ca-certificates
 update-ca-trust enable
 cd /etc/pki/ca-trust/source/anchors/
 

@@ -134,6 +134,7 @@ do
     } &
 done
 
+sleep 5s
 wait
 exec 4<&-
 echo "======== end  time : `date`" >> "${LOGFILE}"
