@@ -18,6 +18,9 @@
 #check indices health statistics.
 #curl -XGET 'http://localhost:9200/_cluster/health?level=indices' | python -m json.tool
 
+#delete one index.
+#curl -XDELETE http://localhost:9200/.marvel-2016.02.19
+
 curl -XPUT localhost:9200/_template/base -d '
 {
   "order": 1,
