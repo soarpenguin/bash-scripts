@@ -18,6 +18,9 @@
 #check indices health statistics.
 #curl -XGET 'http://localhost:9200/_cluster/health?level=indices' | python -m json.tool
 
+#get indices routing table nodes info.
+#curl -XGET "http://localhost:9200/_cluster/state/routing_table,routing_nodes/kibana-int-yongning" | python -m json.tool
+
 #delete one index.
 #curl -XDELETE http://localhost:9200/.marvel-2016.02.19
 
