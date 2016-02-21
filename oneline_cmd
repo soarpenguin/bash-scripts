@@ -113,6 +113,7 @@ dig www.google.com @8.8.8.8
 
 #get version of bind
 dig @8.8.8.8 version.bind chaos txt
+dig @ns4.baidu.com txt version.bind chaos
 #hide bind version option in named.conf
 #option {
 #    version "I don't tell you my version.";
@@ -359,3 +360,22 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # http://mywiki.wooledge.org/BashFAQ/031
 #
 # trap '(read -p "[$BASH_SOURCE:$LINENO] $BASH_COMMAND?")' DEBUG
+
+# nmap usage.
+# sudo nmap -sS -sU -p 53 ns4.baidu.com
+
+# nslookup usage.
+# ➜  bash-scripts git:(master) ✗ nslookup
+# > server ns4.youku.com
+# Default server: ns4.youku.com
+# Address: 60.217.254.9#53
+# >
+# >
+# > zhifu.youku.com
+# Server:       ns4.youku.com
+# Address:  60.217.254.9#53
+#
+# zhifu.youku.com   canonical name = m6-yk-zhifu.youku.com.
+# Name: m6-yk-zhifu.youku.com
+# Address: 43.250.15.34
+#
