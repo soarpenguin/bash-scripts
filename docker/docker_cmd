@@ -125,6 +125,17 @@ docker -d -g /opt/youku/docker --insecure-registry index.tenxcloud.com
 # -v: pointed data volume /webapp to container.
 # -P: random map port to outside of container.
 docker run -d -P --name web -v /webapp training/webapp python app.py
+#     added the ro option to specify that the mount should be read-only.
+docker run -d -P --name web -v /src/webapp:/opt/webapp:ro training/webapp python app.py
+# Creating and mounting a data volume container.
+docker create -v /dbdata --name dbstore training/postgres /bin/true
+docker run -d --volumes-from dbstore --name db1 training/postgres
+docker run -d --volumes-from dbstore --name db2 training/postgres
+# backup data volume
+docker run --rm --volumes-from dbstore -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /dbdata
+# restore data volume
+docker run -v /dbdata --name dbstore2 ubuntu /bin/bash
+docker run --rm --volumes-from dbstore2 -v $(pwd):/backup ubuntu bash -c "cd /dbdata && tar xvf /backup/backup.tar --strip 1"
 
 # -u: run the container with user_id:group_id (1000:1000).
 # -e: run the container with env bash parameter MYSECET(no).
@@ -161,6 +172,17 @@ docker info
 # get docker network infomation.
 docker network ls
 docker network inspect bridge
+# create private bridge
+docker network create -d bridge my-bridge-network
+# inspect private bridge
+docker network inspect my-bridge-network
+# run container use private bridge
+docker run -d --net=my-bridge-network --name db training/postgres
+# now db container can't ping web.
+docker run -d --name web training/webapp python app.py
+# now db container can ping web
+#                      network_name      container_name
+docker network connect my-bridge-network web
 
 # adds a trigger to the metadata of the image being built
 # ONBUILD ADD . /app/src
