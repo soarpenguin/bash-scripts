@@ -73,14 +73,19 @@ docker logs -f [container ID or NAMES]
 # list all container running/stoped
 docker ps -a
 
-docker start
-docker restart
-# login running container
-docker attach
-docker exec -it containerid /bin/bash
-
-# To detach the tty without exiting the shell, use the escape sequence Ctrl-p + Ctrl-q.
+# docker start/stop/restart container.
+docker start <id|name>
+docker stop  <id|name>
+docker restart <id|name>
+# attach/login running container.
+docker attach <id|name>
+docker exec -it <id|name> /bin/bash
+# detach/logout running container.
+# To detach the tty without exiting the shell,
+# Ctrl-p + Ctrl-q (the escape sequence).
 # The container still running.
+#
+# $ exit //the container is stoped.
 
 # export and import
 docker export 7691a814370e > ubuntu.tar
@@ -131,6 +136,7 @@ docker run -d -p 127.0.0.1:5000:5000 training/webapp python app.py
 
 # get host random map port info.
 JOB=$(docker run -d -p 5000 training/webapp python app.py)
+# docker port <container_id | name> port_num
 PORT=$(docker port $JOB 5000 | awk -F: '{ print $2 }')
 
 # --net=bridge,host,container:NAME_or_ID,none
@@ -151,6 +157,10 @@ docker inspect --format='{{.LogPath}}' $INSTANCE_ID
 docker inspect --format '{{.Config.Env}}' $INSTANCE_ID
 
 docker info
+
+# get docker network infomation.
+docker network ls
+docker network inspect bridge
 
 # adds a trigger to the metadata of the image being built
 # ONBUILD ADD . /app/src
