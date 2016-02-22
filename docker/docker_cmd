@@ -11,9 +11,10 @@ docker pull dl.dockerpool.com:5000/ubuntu:12.04
 
 #list image
 docker images
+docker images --no-trunc=true
 
 #create image
-#             -m "comment"        -a "creater"     "parent docker id"  "repo/version" 
+#             -m "comment"        -a "creater"      "container id" "tag:repo/version"
 docker commit -m "Added json gem" -a "Docker Newbee" 0b2616b0e5a8  ouruser/sinatra:v2
 # edit Dockerfile in ./
 docker build -t="ouruser/sinatra:v2" .
@@ -78,7 +79,8 @@ docker restart
 docker attach
 docker exec -it containerid /bin/bash
 
-# disconnect from docker container key map: Ctrl-p + Ctrl-q.
+# To detach the tty without exiting the shell, use the escape sequence Ctrl-p + Ctrl-q.
+# The container still running.
 
 # export and import
 docker export 7691a814370e > ubuntu.tar
@@ -126,6 +128,10 @@ docker run -d -u 1000:1000 -e MYSECET=no -v /webapp training/webapp python app.p
 # -p: map local port of 5000 to container port of 5000.
 docker run -d -p 5000:5000 training/webapp python app.py
 docker run -d -p 127.0.0.1:5000:5000 training/webapp python app.py
+
+# get host random map port info.
+JOB=$(docker run -d -p 5000 training/webapp python app.py)
+PORT=$(docker port $JOB 5000 | awk -F: '{ print $2 }')
 
 # --net=bridge,host,container:NAME_or_ID,none
 docker run -d --net="host" --name web -p 127.0.0.1:5000:5000 -v /opt/web:/web training/webapp python app.py
