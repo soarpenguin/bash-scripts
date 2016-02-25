@@ -379,3 +379,7 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # Name: m6-yk-zhifu.youku.com
 # Address: 43.250.15.34
 #
+# go get -u -v github.com/kardianos/govendor
+# govendor init
+# govendor add +external
+#
