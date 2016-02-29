@@ -5,6 +5,8 @@ sudo debootstrap trusty trusty > /dev/null
 sudo tar -C trusty -c . | sudo docker import - trusty
 docker run trusty cat /etc/lsb-release
 
+tar cv --files-from /dev/null | docker import - scratch
+
 #pull image
 docker pull ubuntu:12.04
 docker pull dl.dockerpool.com:5000/ubuntu:12.04
