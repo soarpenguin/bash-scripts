@@ -5,7 +5,17 @@ sudo debootstrap trusty trusty > /dev/null
 sudo tar -C trusty -c . | sudo docker import - trusty
 docker run trusty cat /etc/lsb-release
 
+#build empty scratch image.
 tar cv --files-from /dev/null | docker import - scratch
+
+#kill all running containers.
+docker kill $(docker ps -q)
+#delete all stoped containers.
+docker rm $(docker ps -a -q)
+#delete all 'untagged/dangling' (<none>) images
+docker rmi $(docker images -q -f dangling=true)
+#delete all images
+docker rmi $(docker images -q)
 
 #pull image
 docker pull ubuntu:12.04
