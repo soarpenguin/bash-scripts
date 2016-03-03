@@ -200,6 +200,8 @@ strace -p $PID
 strace -cp $PID
 # trace clone func call
 strace -T -e clone -p $PID
+# statistic syscall time usage in some time.
+strace -T -r -c -p $PID
 
 ##### ltrace - a library call tracer
 ltrace -cp $PID
