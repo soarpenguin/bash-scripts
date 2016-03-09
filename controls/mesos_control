@@ -111,6 +111,11 @@ start() {
     if [ x"$EXEC_NAME" == "xmesos-master" ]; then
         CMD="$CMD --zk=${ZK_INFO} --quorum=2 --cluster=mesoscluster "
     else
+        if [ -f "$CURDIR/mesos.conf" ]; then
+            . "$CURDIR/mesos.conf"
+            CMD="$CMD $slave_args "
+        fi
+
         CMD="$CMD --master=${ZK_INFO} --appc_store_dir=/opt/${EXEC_NAME}/store/appc "
     fi
 
