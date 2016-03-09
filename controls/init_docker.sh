@@ -55,7 +55,8 @@ service docker restart
 ######### set docker privilege
 yum install -y ca-certificates
 update-ca-trust enable
-cd /etc/pki/ca-trust/source/anchors/
+cadir="/etc/pki/ca-trust/source/anchors/"
+mkdir -p "$cadir" && cd "$cadir"
 
 cat > dockerCA.crt << EOF
 -----BEGIN CERTIFICATE-----
@@ -86,8 +87,8 @@ EOF
 
 chmod 644 dockerCA.crt
 
-mkdir -p /etc/docker/certs.d/docker.registry.io/
-\cp dockerCA.crt /etc/docker/certs.d/docker.registry.io/ca.crt
+dcadir="/etc/docker/certs.d/docker.registry.io/"
+mkdir -p "$dcadir" && \cp dockerCA.crt /etc/docker/certs.d/docker.registry.io/ca.crt
 update-ca-trust extract
 
 docker login --username='soarpenguin' --password='abcd' --email="soarpenguin@gmail.com" https://docker.registry.io/v2/
