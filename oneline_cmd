@@ -42,6 +42,10 @@ ip addr del 10.11.18.14/32 dev lo:14
 #config initcwnd and initrwnd
 ip route | while read p; do echo "ip route change $p initcwnd 10 initrwnd 10"; done
 
+#delete bridge
+ip link set docker0 down
+brctl delbr docker0
+
 #iptables
 #iptables [-t table] command [match] [target/jump]
 # -t --table: table(filter, nat, mangle, raw)

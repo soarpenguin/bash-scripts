@@ -231,3 +231,7 @@ curl http://127.0.0.1:4243/containers/json | python -m json.tool
 curl -s http://127.0.0.1:4243/containers/1c3b02900db9df0/stats?stream=false | python -m json.tool
 #### get container info from remote api.
 curl -s http://127.0.0.1:4243/containers/1c3b02900db9df0/json | python -m json.tool
+
+#delete bridge
+ip link set docker0 down
+brctl delbr docker0
