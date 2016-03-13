@@ -389,3 +389,9 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # govendor init
 # govendor add +external
 #
+# # build current project
+# go build ./...
+# # print the commands build current project but do not run them.
+# go build -n ./...
+# go install -a -v ./...
+# go get -v -u -x github.com/hyper-carrot/go_lib
