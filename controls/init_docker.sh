@@ -92,10 +92,14 @@ mkdir -p "$dcadir" && \cp dockerCA.crt /etc/docker/certs.d/docker.registry.io/ca
 update-ca-trust extract
 
 # conntrack tuning
-echo "net.nf_conntrack_max=1048576" >> /etc/sysctl.conf && sysctl -p
+num=`grep nf_conntrack_max /etc/sysctl.conf | wc -l`
+if [ $num -le 0 ]; then
+    echo "net.nf_conntrack_max=1048576" >> /etc/sysctl.conf && sysctl -p
+fi
+
 if [ -f "/sys/module/nf_conntrack/parameters/hashsize" ]; then
     echo 524288 > /sys/module/nf_conntrack/parameters/hashsize
-else if [ -f "/sys/module/ip_conntrack/parameters/hashsize" ]; then
+elif [ -f "/sys/module/ip_conntrack/parameters/hashsize" ]; then
     echo 524288 > /sys/module/ip_conntrack/parameters/hashsize
 fi
 
