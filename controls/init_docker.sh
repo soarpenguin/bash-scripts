@@ -91,6 +91,14 @@ dcadir="/etc/docker/certs.d/docker.registry.io/"
 mkdir -p "$dcadir" && \cp dockerCA.crt /etc/docker/certs.d/docker.registry.io/ca.crt
 update-ca-trust extract
 
+# conntrack tuning
+echo "net.nf_conntrack_max=1048576" >> /etc/sysctl.conf && sysctl -p
+if [ -f "/sys/module/nf_conntrack/parameters/hashsize" ]; then
+    echo 524288 > /sys/module/nf_conntrack/parameters/hashsize
+else if [ -f "/sys/module/ip_conntrack/parameters/hashsize" ]; then
+    echo 524288 > /sys/module/ip_conntrack/parameters/hashsize
+fi
+
 docker login --username='soarpenguin' --password='abcd' --email="soarpenguin@gmail.com" https://docker.registry.io/v2/
 
 cd /etc/ && wget -N 10.10.10.10/www/docker/docker.tar.gz
