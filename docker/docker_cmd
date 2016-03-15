@@ -235,3 +235,14 @@ curl -s http://127.0.0.1:4243/containers/1c3b02900db9df0/json | python -m json.t
 #delete bridge
 ip link set docker0 down
 brctl delbr docker0
+
+# solve error: nf_conntrack: table full, dropping packet
+sudo iptables -L
+sudo iptables -F
+/etc/init.d/iptables stop
+sudo modprobe -n -r nf_conntrack
+
+# conntrack tuning
+echo "net.nf_conntrack_max=1048576" >> /etc/sysctl.conf
+sysctl -p
+echo 524288 > /sys/module/nf_conntrack/parameters/hashsize
