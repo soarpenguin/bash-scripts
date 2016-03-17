@@ -367,6 +367,9 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #
 # trap '(read -p "[$BASH_SOURCE:$LINENO] $BASH_COMMAND?")' DEBUG
 
+#dmidecode -t 1 | grep -iP "manu|product"
+#last reboot
+
 # nmap usage.
 # sudo nmap -sS -sU -p 53 ns4.baidu.com
 
