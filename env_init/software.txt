@@ -49,3 +49,5 @@ glibc-common
 
 xclip
 strace
+debuginfo-install
+coreutils

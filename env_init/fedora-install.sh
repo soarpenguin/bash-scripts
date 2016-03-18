@@ -82,6 +82,8 @@ $package_manager -y install perf
 $package_manager -y install sysstat
 $package_manager -y install screen
 $package_manager -y install strace
+$package_manager -y install debuginfo-install
+$package_manager -y install coreutils
 #$package_manager -y install arduino
 #$package_manager -y install eclipse-jdt
 #$package_manager -y install python-pip
