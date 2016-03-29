@@ -398,3 +398,18 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # go build -n ./...
 # go install -a -v ./...
 # go get -v -u -x github.com/hyper-carrot/go_lib
+#
+########
+# Recovery rm -rf file
+# ➜ sudo apt-get install extundelete
+# ➜ df -Th
+# Filesystem     Type      Size  Used Avail Use% Mounted on
+# udev           devtmpfs  3.9G  4.0K  3.9G   1% /dev
+# tmpfs          tmpfs     791M  1.2M  790M   1% /run
+# /dev/sda4      ext4      128G   27G   95G  22% /
+# none           tmpfs     4.0K     0  4.0K   0% /sys/fs/cgroup
+# none           tmpfs     5.0M     0  5.0M   0% /run/lock
+# none           tmpfs     3.9G  140K  3.9G   1% /run/shm
+# none           tmpfs     100M   28K  100M   1% /run/user
+#
+# ➜ sudo extundelete --restore-all /dev/sda4
