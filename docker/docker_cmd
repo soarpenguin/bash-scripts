@@ -196,6 +196,18 @@ docker run -d --name web training/webapp python app.py
 #                      network_name      container_name
 docker network connect my-bridge-network web
 
+docker network create --driver bridge isolated_nw
+docker network inspect isolated_nw
+docker network ls
+# docker run --net=<NETWORK>
+docker run --net=isolated_nw -itd --name=container3 busybox
+
+# To create an overlay network, you configure options on the daemon
+# on each Docker Engine for use with overlay network
+# --cluster-store=PROVIDER://URL and -–cluster-advertise=HOST_IP
+docker network create --driver overlay my-multi-host-network
+docker run -itd --net=my-multi-host-network busybox
+
 # adds a trigger to the metadata of the image being built
 # ONBUILD ADD . /app/src
 
