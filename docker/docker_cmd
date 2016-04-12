@@ -246,3 +246,21 @@ sudo modprobe -n -r nf_conntrack
 echo "net.nf_conntrack_max=1048576" >> /etc/sysctl.conf
 sysctl -p
 echo 524288 > /sys/module/nf_conntrack/parameters/hashsize
+
+# setup docker for vm machine
+# 1. vim /etc/grub.conf add "max_loop=128" to reboot parameter.
+# 2. make a file for size limit:  30G 
+#    $ dd if=/dev/zero of=/opt/10.10.10.10_test bs=1 count=0 seek=30G  
+# 3. $ losetup /dev/loop125 /opt/10.10.10.10_test
+# 4. $ mkdir /opt/10.10.10.10d_test
+# 5. $ mkfs -t ext4 -c /dev/loop125
+# 6. $ mount /dev/loop125 /opt/10.10.10.10d_test
+# 7. install docker
+# 8. ifconfig br0
+#    $ sudo apt-get install brctl
+#    $ sudo brctl addbr br0
+#    $ brctl addif br0 eth0
+# 9. docker run container
+#    $ docker run -d -name=test --net='none' -v "/opt/10.10.10.10d_test:/workspace" 3a9a22f1be6b
+#10. configure docker network
+#    $ pipework br0 test1 10.10.10.11/24@10.10.10.1
