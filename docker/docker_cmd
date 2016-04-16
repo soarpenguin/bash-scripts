@@ -259,6 +259,10 @@ echo "net.nf_conntrack_max=1048576" >> /etc/sysctl.conf
 sysctl -p
 echo 524288 > /sys/module/nf_conntrack/parameters/hashsize
 
+# rm dead container
+# failed to remove root filesystem 656cfd09aee...
+# $ umount /var/lib/docker/devicemapper/mnt/656cfd09aee...
+
 # setup docker for vm machine
 # 1. vim /etc/grub.conf add "max_loop=128" to reboot parameter.
 # 2. make a file for size limit:  30G 
