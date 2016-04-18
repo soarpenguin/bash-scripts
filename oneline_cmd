@@ -398,7 +398,15 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # go build -n ./...
 # go install -a -v ./...
 # go get -v -u -x github.com/hyper-carrot/go_lib
-#
+
+# go pprof usage
+# ## import _ "net/http/pprof"
+# ## http.ListenAndServe(":8080", nil)
+# $ go tool pprof http://localhost:8080/debug/pprof/heap
+# $ go tool pprof http://localhost:8080/debug/pprof/profile
+# $ go tool pprof http://localhost:8080/debug/pprof/block
+# $ go tool pprof cmd(program-name) http://localhost:8080/debug/pprof/heap
+
 ########
 # Recovery rm -rf file
 # ➜ sudo apt-get install extundelete
