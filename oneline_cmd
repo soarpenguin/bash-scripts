@@ -406,6 +406,13 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # $ go tool pprof http://localhost:8080/debug/pprof/profile
 # $ go tool pprof http://localhost:8080/debug/pprof/block
 # $ go tool pprof cmd(program-name) http://localhost:8080/debug/pprof/heap
+#
+# CPU
+# ### example: write cpuprofile info to cprof.
+# $ go test -run=none -bench=ClientServerParallel4 -cpuprofile=cprof net/http
+# ###### the most useful ones are: --text, --web and --list
+# $ go tool pprof --text http.test cprof
+# $ go tool pprof --text mybin http://myserver:6060/debug/pprof/profile
 
 ########
 # Recovery rm -rf file
