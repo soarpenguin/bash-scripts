@@ -47,23 +47,17 @@ _print_fatal() {
 ##################### main route #######################
 if [ -d ${DESTDIR} ]; then
     _trace "Start updating code in ${DESTDIR}"
-    pushd .
+    pushd . &>/dev/null
     cd ${DESTDIR}
 
-    for d in `ls`; do
-        UPDATEDIR="${DESTDIR}/${d}"
-        if [[ -d "${UPDATEDIR}" && -d "${UPDATEDIR}/.git" ]]; then
-            _notice "Start update code in ${UPDATEDIR} ..."
-            cd "${UPDATEDIR}" && git pull --recurse-submodules
-
-            if [ $? -eq 0 ]; then
-                _trace "Update code in ${UPDATEDIR} succ."
-            else
-                _print_fatal "Update code in ${UPDATEDIR} fail."
-            fi
-            cd "${DESTDIR}"
+    for dir in `find "${DESTDIR}" -maxdepth 3 -name ".git" -type d`; do
+        pdir=${dir%/*}
+        _notice "Start update code in ${pdir} ..."
+        cd "$dir/../" && git pull --recurse-submodules
+        if [ $? -eq 0 ]; then
+            _trace "Update code in ${pdir} succ."
         else
-            _trace "Skip update ${UPDATEDIR}"
+            _print_fatal "Update code in ${pdir} fail."
         fi
     done
 
