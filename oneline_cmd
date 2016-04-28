@@ -178,6 +178,9 @@ mount /dev/md0 /mnt
 #mysqldump --add-drop-table -uroot -p nowait > backupfile.sql
 #mysql -uroot --default-character-set=utf8 -p
 #
+#./bin/mysqld --verbose --help | grep -A 1 'Default options'
+#${CURDIR}/bin/mysqld_safe --basedir="${CURDIR}" --datadir="${CURDIR}/data/mysql"
+#
 #alter table ip add index idx_ip(ip);
 
 #look for system perfermace.
