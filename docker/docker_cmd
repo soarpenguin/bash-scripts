@@ -293,3 +293,21 @@ echo 524288 > /sys/module/nf_conntrack/parameters/hashsize
 #
 # # start container
 # $ sudo runc start
+#
+# Launching Containers with Containerd
+# #### Creating container to launch.
+# $ docker create --name tempredis redis
+# $ mkdir -p rootfs
+# $ docker export tempredis | tar -C rootfs -xf -
+# $ runc spec
+# $ cat config.json
+# #### Starting Daemon
+# $ sudo nohup containerd >/dev/null 2>&1 &
+# $ cat /run/containerd/events.log
+# #### Starting a Container
+# $ sudo ctr containers start redis .
+# #### Managing Containers
+# $ sudo ctr containers list
+# $ sudo ctr containers stats redis
+# $ sudo ctr containers kill redis
+# $ sudo ctr events
