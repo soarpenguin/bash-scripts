@@ -280,3 +280,16 @@ echo 524288 > /sys/module/nf_conntrack/parameters/hashsize
 #    $ docker run -d -name=test --net='none' -v "/opt/10.10.10.10d_test:/workspace" 3a9a22f1be6b
 #10. configure docker network
 #    $ pipework br0 test1 10.10.10.11/24@10.10.10.1
+
+#docker runc usage
+# $ runc --help
+# # need: rootfs/  config.json  runtime.json
+# ## rootfs/
+# $ docker create --name cont1 alpine sh
+# $ docker export cont1 > alpine.tar
+# $ mkdir rootfs; tar -xf alpine.tar -C rootfs
+# ## config.json  runtime.json
+# $ runc spec
+#
+# # start container
+# $ sudo runc start
