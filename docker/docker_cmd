@@ -311,3 +311,7 @@ echo 524288 > /sys/module/nf_conntrack/parameters/hashsize
 # $ sudo ctr containers stats redis
 # $ sudo ctr containers kill redis
 # $ sudo ctr events
+
+# mkdir rootfs
+# mount -o loop /path/to/iso rootfs
+# tar -C rootfs -c . | docker import - soarpenguin/base
