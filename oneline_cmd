@@ -431,3 +431,16 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # none           tmpfs     100M   28K  100M   1% /run/user
 #
 # ➜ sudo extundelete --restore-all /dev/sda4
+#
+#########
+## create rootfs under ubuntu.
+#Create the blank image file using dd; this example creates a 1GB image; use seek=3072 for 3GB or seek=2048 for 2GB etc.:
+#    dd if=/dev/zero of=ubuntu-arm.img bs=1MB count=0 seek=1024
+#Create linux filesystem on the newly created image:
+#    mkfs.ext4 -F ubuntu-arm.img
+#(You might want to pass some extra flags to mkfs to tweak the reserved blocks, labels, or other filesystem options.)
+#Loop mount the new image:
+#    sudo mount -o loop ubuntu-arm.img /mnt
+#Extract the rootfs tarball inside the mounted dir and umount:
+#    sudo tar -C /mnt -zxf armel-rootfs-200904151837.tgz
+#    sudo umount /mnt
