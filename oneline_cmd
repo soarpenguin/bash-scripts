@@ -38,6 +38,23 @@ ip route add default via 192.168.1.254 dev eth1
 # add/del vip on local dev(lo:14)
 /sbin/ifconfig lo:14 10.11.18.14 broadcast 10.11.18.14 netmask 0xffffffff up && /sbin/route add -host 10.11.18.14 dev lo:14
 ip addr del 10.11.18.14/32 dev lo:14
+ifconfig lo:14 down
+
+#ifconfig
+#ifconfig -a
+#ifconfig eth0 up
+#ifconfig eth0 down
+#ifconfig eth0 172.16.25.125
+#ifconfig eth0 netmask 255.255.255.224
+#ifconfig eth0 broadcast 172.16.25.63
+#ifconfig eth0 172.16.25.125 netmask 255.255.255.224 broadcast 172.16.25.63
+#ifconfig eth0 mtu 1500
+#ifconfig eth0 promisc
+#ifconfig eth0 -promisc
+#ifconfig eth0:0 172.16.25.127
+#ifconfig eth0:0
+#ifconfig eth0:0 down   #remove network interface eth0:0
+#ifconfig eth0 hw ether AA:BB:CC:DD:EE:FF    #change mac address of network interface
 
 #config initcwnd and initrwnd
 ip route | while read p; do echo "ip route change $p initcwnd 10 initrwnd 10"; done
@@ -104,11 +121,6 @@ ethtool -g eth0
 #check net interface offloading
 ethtool -k eth0         #look option
 ethtool -K eth0 tso off #set option
-
-#ifconfig
-ifconfig eth0 mtu 1500
-ifconfig eth0 down
-ifconfig eth0 up
 
 #dig command usage.
 dig [@server] domain [query-type] [query-class] [+query-option] [-dig-option] [%comment]
