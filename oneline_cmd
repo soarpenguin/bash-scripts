@@ -456,3 +456,12 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #Extract the rootfs tarball inside the mounted dir and umount:
 #    sudo tar -C /mnt -zxf armel-rootfs-200904151837.tgz
 #    sudo umount /mnt
+
+#########
+# apparmor usage: https://wiki.ubuntu.com/AppArmor
+# Start : sudo /etc/init.d/apparmor start
+# Stop : sudo /etc/init.d/apparmor stop
+# reload: sudo /etc/init.d/apparmor reload
+# Show status: sudo /etc/init.d/apparmor status
+# Parser profile: sudo apparmor_parser -r /etc/apparmor.d/<profile>
+# Generate profile: sudo genprof firefox
