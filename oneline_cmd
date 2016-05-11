@@ -471,9 +471,11 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # $ lsblk -f
 #
 #########
-# ipvsadm -L --timeout  Timeout (tcp tcpfin udp): 30 5 60 // 查看超时时间1、tcp session时间  2、连接断开后保持时间 3、udp超时时间
+# ipvsadm -L --timeout // Timeout (tcp tcpfin udp): 30 5 60
+#                      // 查看超时时间1、tcp session时间  2、连接断开后保持时间 3、udp超时时间
 # ipvsadm -L -n    // 查看
 # ipvsadm -C       // 清空
 # ipvsadm -L -n -t 10.10.5.0:3306           // 查看某一个VIP的链接数(注:一定要加端口)
 # ipvsadm -L -n -t 10.10.5.0:3306 --stats   // 查看某一个VIP连接数与流量
 # ipvsadm -L -n -t 10.10.5.0:3305 --stats --exact  // 查看某一个VIP的连接数(--exact参数作用是显示更为精准)
+# ipvsadm --set 30 5 60 // Timeout (tcp tcpfin udp): 30 5 60
