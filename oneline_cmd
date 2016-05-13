@@ -479,3 +479,21 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # ipvsadm -L -n -t 10.10.5.0:3306 --stats   // 查看某一个VIP连接数与流量
 # ipvsadm -L -n -t 10.10.5.0:3305 --stats --exact  // 查看某一个VIP的连接数(--exact参数作用是显示更为精准)
 # ipvsadm --set 30 5 60 // Timeout (tcp tcpfin udp): 30 5 60
+#
+### bonding
+# $ modprobe --first-time bonding
+# $ modinfo bonding
+# $ cat > /etc/sysconfig/network-scripts/ifcfg-bond0 <EOF
+#    DEVICE=bond0
+#    BOOTPROTO=static
+#    ONBOOT=yes
+#    TYPE=Ethernet
+#    NETWORKING_IPV6=no
+#    HWMAC=xx:xx:xx:xx:xx
+#   EOF
+# $ ifenslave bond0 eth1
+#
+# vconfig add eth0 6
+# ifconfig eth0.6 10.10.6.51 netmask 255.255.255.0 up
+# ifenslave bond0 eth1
+# ip ro add 10.0.0.0/8 via 10.10.6.254
