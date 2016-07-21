@@ -35,6 +35,15 @@ ip ro add 10.0.0.0/8 via 10.11.11.254
 # add default route
 ip route add default via 192.168.1.254 dev eth1
 
+# list rule table
+ip rule l
+# list rule main table
+ip r l t main
+# add 11.0.0.0/8 to lookup table 201
+ip rule a from 11.0.0.0/8 lookup 201
+ip r a 11.0.0.0/8 dev eth0 table 201
+ip r a default via 11.17.12.1 table 201
+
 # add/del vip on local dev(lo:14)
 /sbin/ifconfig lo:14 10.11.18.14 broadcast 10.11.18.14 netmask 0xffffffff up && /sbin/route add -host 10.11.18.14 dev lo:14
 ip addr del 10.11.18.14/32 dev lo:14
