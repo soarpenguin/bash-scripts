@@ -130,6 +130,7 @@ ethtool -g eth0
 #check net interface offloading
 ethtool -k eth0         #look option
 ethtool -K eth0 tso off #set option
+ethtool -K eth0 lro off
 
 #dig command usage.
 dig [@server] domain [query-type] [query-class] [+query-option] [-dig-option] [%comment]
@@ -255,6 +256,7 @@ ifconfig | grep -oP '(?<=inet addr:).*(?=  Bcast:)' | xargs -n 4
 #   pattern   { action statements }
 #   function name(parameter list) { statements }
 #   awk '/pattern/ { action }' and '{if($1==pattern) action}' 
+#   tail -f /var/log/apache2/access.log | awk -W interactive '!x[$1]++ {print $1}'
 ps aux | awk '{if($1=="root") print $(NF-1)}'
 #   insert line before match line
 sed -i '/        - git branch/i\        - git rev-parse HEAD' file
