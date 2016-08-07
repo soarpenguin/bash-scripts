@@ -263,6 +263,18 @@ echo 524288 > /sys/module/nf_conntrack/parameters/hashsize
 # failed to remove root filesystem 656cfd09aee...
 # $ umount /var/lib/docker/devicemapper/mnt/656cfd09aee...
 
+# docker >= 1.11
+# docker engine
+/usr/bin/docker daemon -H fd://
+# docker containerd
+docker-containerd -l /var/run/docker/libcontainerd/docker-containerd.sock --runtime docker-runc --start-timeout 2m
+# docker containerd ctr
+docker-containerd-ctr --address "/var/run/docker/libcontainerd/docker-containerd.sock" containers
+docker-containerd-ctr --address "/var/run/docker/libcontainerd/docker-containerd.sock" state 4b1ff2a9db...xxx | python -m json.tool
+# docker-containerd-shim
+docker-containerd-shim 4b1ff2a9db...xxx /var/run/docker/libcontainerd/4b1ff2a9db...xxx docker-runc
+
+
 # setup docker for vm machine
 # 1. vim /etc/grub.conf add "max_loop=128" to reboot parameter.
 # 2. make a file for size limit:  30G 
