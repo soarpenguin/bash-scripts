@@ -508,3 +508,12 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # ifconfig eth0.6 10.10.6.51 netmask 255.255.255.0 up
 # ifenslave bond0 eth1
 # ip ro add 10.0.0.0/8 via 10.10.6.254
+#
+#Google grpc proto usage.
+# under proto files path.
+# 1. install protoc cmd
+#   https://github.com/google/protobuf/releases
+# 2. install golang protoc-gen-go cmd
+#   $ go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
+# 3. protoc cmd usage.
+#   $ $GOPATH/bin/protoc --proto_path="~/golib/bin/protoc_include/" -I=./ --go_out=plugins=grpc:. *.proto
