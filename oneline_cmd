@@ -510,10 +510,13 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # ip ro add 10.0.0.0/8 via 10.10.6.254
 #
 #Google grpc proto usage.
-# under proto files path.
+# protoc document:
+#  https://developers.google.com/protocol-buffers/docs/proto3
+#  https://developers.google.com/protocol-buffers/docs/reference/go-generated
+#
 # 1. install protoc cmd
 #   https://github.com/google/protobuf/releases
 # 2. install golang protoc-gen-go cmd
 #   $ go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
-# 3. protoc cmd usage.
+# 3. protoc cmd usage, under proto files path.
 #   $ $GOPATH/bin/protoc --proto_path="~/golib/bin/protoc_include/" -I=./ --go_out=plugins=grpc:. *.proto
