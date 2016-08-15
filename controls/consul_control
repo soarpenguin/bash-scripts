@@ -2,7 +2,7 @@
 #
 # consul_control <summary>
 # author: soarpenguin@gmail.com 
-# description: Starts and stops a single consul instance on this system 
+# description: Starts and stops a single consul instance on this system
 #
 
 ### BEGIN INIT INFO
@@ -44,7 +44,7 @@ usage() {
 Usage: bash ${MYNAME} [-h] -t type
                  action {start|stop|status|restart|condrestart|try-restart|reload|force-reload}
 
-Mesos start/stop control scripts.
+Consul start/stop control scripts.
 
 Optional arguments:
     -h, --help            show this help message and exit
@@ -99,7 +99,7 @@ parse_options() {
         0|*)
             usage 1>&2
             return 1
-	;;
+	        ;;
     esac
 }
 
@@ -110,14 +110,14 @@ start() {
     CMD="${EXEC} agent -data-dir $CURDIR/data -atlas-join -config-dir $CURDIR/consul.d -bind=${MYIP} -pid-file=${PIDFILE}"
 
     if [ x"$TYPE" == "xserver" ]; then
-        CMD="$CMD -server -bootstrap-expect 3 -node=consul-${TYPE}-${MYID} -ui-dir $CURDIR/ui -client=0.0.0.0 "
+        CMD="$CMD -server -bootstrap-expect 3 -node=consul-${TYPE}-${MYIP} -ui-dir $CURDIR/ui -client=0.0.0.0 "
     else
         CMD="$CMD -node=consul-${TYPE}-${MYIP} -client=0.0.0.0 "
     fi
 
-    echo -n $"Starting ${PROG} ${TYPE}: "
+    echo -n "Starting ${PROG} ${TYPE}: "
     # if not running, start it up here, usually something like "daemon $exec"
-    daemon --pidfile ${PIDFILE} ${CMD}
+    daemon --pidfile ${PIDFILE} ${CMD} </dev/null >/dev/null 2>&1 &
     #echo "daemon --pidfile ${PIDFILE} ${CMD}"
     retval=$?
     echo
@@ -126,7 +126,7 @@ start() {
 }
 
 stop() {
-    echo -n $"Stopping ${PROG} ${TYPE}: "
+    echo -n "Stopping ${PROG} ${TYPE}: "
     # stop it here, often "killproc $PROG"
     killproc -p $PIDFILE -d 20 ${EXEC}
     retval=$?
@@ -198,7 +198,7 @@ elif [[ x"$TYPE" != "xserver" && x"$TYPE" != "xagent" ]]; then
     usage 1>&2
     exit 1
 fi
-    
+
 case "${ACTION}" in
     start)
         rh_status_q && exit 0
@@ -227,7 +227,7 @@ case "${ACTION}" in
         restart
         ;;
     *)
-        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+        echo "Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
         exit 2
 esac
 exit $?
