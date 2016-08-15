@@ -1,0 +1,215 @@
+#!/bin/sh
+#
+# marathon_control <summary>
+# author: soarpenguin@gmail.com
+# description: Starts and stops a single marathon instance on this system
+#
+
+### BEGIN INIT INFO
+### END INIT INFO
+
+#
+# init.d / servicectl compatibility (openSUSE)
+#
+if [ -f /etc/rc.status ]; then
+    . /etc/rc.status
+    rc_reset
+fi
+
+#
+# Source function library.
+#
+if [ -f /etc/rc.d/init.d/functions ]; then
+    . /etc/rc.d/init.d/functions
+fi
+
+#set -x
+export PS4='+ [`basename ${BASH_SOURCE[0]}`:$LINENO ${FUNCNAME[0]} \D{%F %T} $$ ] '
+
+MYNAME="${0##*/}"
+PROG="marathon"
+CURDIR=$(cd "$(dirname "$0")"; pwd)
+PIDFILE="/var/run/${PROG}.pid"
+LOGDIR="/opt/log/${PROG}"
+LOGFILE="${LOGDIR}/${PROG}.log"
+EXEC="${CURDIR}/bin/start"
+ACTION=""
+
+mkdir -p ${LOGDIR}
+[ -e /etc/sysconfig/$PROG ] && . /etc/sysconfig/$PROG
+
+usage() {
+    cat << USAGE
+Usage: bash ${MYNAME} [-h]
+                 action {start|stop|status|restart|condrestart|try-restart|reload|force-reload}
+
+Marathon start/stop control scripts.
+
+Optional arguments:
+    -h, --help            show this help message and exit
+
+Require:
+    action  {start|stop|status|restart|condrestart|try-restart|reload|force-reload}
+
+USAGE
+
+    exit 1
+}
+
+#
+# Parses command-line options.
+#  usage: parse_options "$@" || exit $?
+#
+parse_options() {
+    declare -a argv
+
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -h|--help)
+               	usage
+               	exit
+               	;;
+            --)
+               	shift
+                argv=("${argv[@]}" "${@}")
+               	break
+               	;;
+            -*)
+               	echo "command line: unrecognized option $1" >&2
+               	return 1
+               	;;
+            *)
+                argv=("${argv[@]}" "${1}")
+                shift
+                ;;
+        esac
+    done
+
+    case ${#argv[@]} in
+        1)
+            ACTION="${argv[0]}"
+            ;;
+        0|*)
+            usage 1>&2
+            return 1
+       	;;
+    esac
+}
+
+
+chmod +x "${CURDIR}/bin/start"
+MYIP=`ifconfig | grep "inet addr:10\." | grep -oP "((\d+\.)){3}(\d+)" | head -n 1`
+
+export MESOSPHERE_HTTP_CREDENTIALS="xxxxxx:bbbbbb"
+
+MASTER_INFO="zk://10.10.3.4:2181,10.10.3.5:2181,10.10.3.6:2181/mesos"
+ZK_INFO="zk://10.10.3.4:2181,10.10.4.5:2181,10.10.3.6:2181/marathon"
+
+
+start() {
+    CMD="${EXEC} --master ${MASTER_INFO} --zk ${ZK_INFO} --hostname ${MYIP}"
+
+    echo -n "Starting ${PROG}: "
+    # if not running, start it up here, usually something like "daemon $exec"
+    ${CMD} </dev/null >/dev/null 2>&1 &
+    echo $! > ${PIDFILE}
+    retval=$?
+    echo
+    #[ $retval -eq 0 ] && touch $lockfile
+    return $retval
+}
+
+stop() {
+    echo -n "Stopping ${PROG}: "
+    # stop it here, often "killproc $PROG"
+    killproc -p $PIDFILE -d 20 ${EXEC}
+    retval=$?
+    echo
+    return $retval
+}
+
+pstatus () {
+    if pgrep -f "${EXEC}" >/dev/null; then
+        return 0
+    fi
+    return 1
+}
+
+forcestop() {
+    echo "Force stopping ${EXEC}"
+    pkill $1 -f "${EXEC}"
+}
+
+forcerestart () {
+    stop
+    try=1
+    sleep 1
+    while pstatus; do
+        try=$((try + 1))
+        if [ $try -gt 3 ]; then
+            forcestop -9
+        else
+            forcestop
+        fi
+        echo "Waiting for ${EXEC} to die.."
+        sleep 5
+    done
+    start
+}
+
+restart() {
+    forcerestart
+}
+
+reload() {
+    restart
+}
+
+force_reload() {
+    restart
+}
+
+rh_status() {
+    # run checks to determine if the service is running or use generic status
+    status -p ${PIDFILE} ${EXEC}
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
+################################## main route #################################
+parse_options "${@}" || usage
+
+case "${ACTION}" in
+    start)
+        rh_status_q && exit 0
+        ${ACTION}
+        ;;
+    stop)
+        rh_status_q || exit 0
+        ${ACTION}
+        pstatus && forcestop -9
+        ;;
+    restart)
+        ${ACTION}
+        ;;
+    reload)
+        rh_status_q || exit 7
+        ${ACTION}
+        ;;
+    force-reload)
+        force_reload
+        ;;
+    status)
+        rh_status
+        ;;
+    condrestart|try-restart)
+        rh_status_q || exit 0
+        restart
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+        exit 2
+esac
+exit $?
