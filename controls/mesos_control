@@ -1,4 +1,4 @@
-!/bin/sh
+#!/bin/sh
 #
 # mesos_control <summary>
 # author: soarpenguin@gmail.com
@@ -30,7 +30,6 @@ MYNAME="${0##*/}"
 PROG="mesos"
 CURDIR=$(cd "$(dirname "$0")"; pwd)
 PIDFILE="/var/run/${PROG}.pid"
-LOGFILE="/opt/log/${PROG}.log"
 EXEC="$PROG"
 MESOSTYPE=""
 ACTION=""
@@ -69,7 +68,7 @@ parse_options() {
     while [[ $# -gt 0 ]]; do
         case $1 in
             -t|--type)
-                MESOSTYPE="${2}"
+               MESOSTYPE="${2}"
                shift 2
                ;;
             -h|--help)
@@ -78,7 +77,7 @@ parse_options() {
                ;;
             --)
                shift
-                argv=("${argv[@]}" "${@}")
+               argv=("${argv[@]}" "${@}")
                break
                ;;
             -*)
@@ -86,9 +85,9 @@ parse_options() {
                return 1
                ;;
             *)
-                argv=("${argv[@]}" "${1}")
-                shift
-                ;;
+               argv=("${argv[@]}" "${1}")
+               shift
+               ;;
         esac
     done
 
@@ -99,14 +98,15 @@ parse_options() {
         0|*)
             usage 1>&2
             return 1
- ;;
+            ;;
     esac
 }
 
 start() {
     local EXEC_NAME="${PROG}-${MESOSTYPE}"
 
-    CMD="${EXEC_NAME} --log_dir=/opt/${EXEC_NAME}/log --work_dir=/opt/${EXEC_NAME}/data --no-hostname_lookup "
+    mkdir -p ${CURDIR}/{log,data}
+    CMD="${EXEC_NAME} --log_dir=${CURDIR}/log --work_dir=${CURDIR}/data --no-hostname_lookup "
 
     if [ x"$EXEC_NAME" == "xmesos-master" ]; then
         CMD="$CMD --zk=${ZK_INFO} --quorum=2 --cluster=mesoscluster "
@@ -116,13 +116,16 @@ start() {
             CMD="$CMD $slave_args "
         fi
 
-        CMD="$CMD --master=${ZK_INFO} --appc_store_dir=/opt/${EXEC_NAME}/store/appc "
+        mkdir -p ${CURDIR}/store/appc
+        CMD="$CMD --master=${ZK_INFO} --appc_store_dir=${CURDIR}/store/appc --containerizers=docker,mesos "
     fi
 
-    echo -n $"Starting ${EXEC_NAME}: "
+    echo -n "Starting ${EXEC_NAME}: "
     # if not running, start it up here, usually something like "daemon $exec"
-    daemon --pidfile ${PIDFILE} ${CMD}
+    #daemon --pidfile ${PIDFILE} ${CMD}
+    nohup ${CMD} &>/dev/null &
     #echo "daemon --pidfile ${PIDFILE} ${CMD}"
+    echo $! > ${PIDFILE}
     retval=$?
     echo
     #[ $retval -eq 0 ] && touch $lockfile
@@ -132,7 +135,7 @@ start() {
 stop() {
     local EXEC_NAME="${PROG}-${MESOSTYPE}"
 
-    echo -n $"Stopping ${PROG}-${MESOSTYPE}: "
+    echo -n "Stopping ${PROG}-${MESOSTYPE}: "
     # stop it here, often "killproc $PROG"
     killproc -p $PIDFILE -d 20 $EXEC_NAME
     retval=$?
@@ -213,7 +216,6 @@ elif [[ x"$MESOSTYPE" != "xmaster" && x"$MESOSTYPE" != "xslave" ]]; then
 fi
 
 EXEC="${PROG}-${MESOSTYPE}"
-PIDFILE="/var/run/${EXEC}.pid"
 
 case "${ACTION}" in
     start)
@@ -223,6 +225,7 @@ case "${ACTION}" in
     stop)
         rh_status_q || exit 0
         ${ACTION}
+        sleep 1
         pstatus && forcestop -9
         ;;
     restart)
@@ -243,7 +246,7 @@ case "${ACTION}" in
         restart
         ;;
     *)
-        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+        echo "Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
         exit 2
 esac
 exit $?
