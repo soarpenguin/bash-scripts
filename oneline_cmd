@@ -509,6 +509,15 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # ifenslave bond0 eth1
 # ip ro add 10.0.0.0/8 via 10.10.6.254
 #
+### make vlan tag
+# 1. edit /etc/sysconfig/network-scripts/ifcfg-eth0
+#    IPADDR=
+# 2. add tag
+#    vconfig add eth0 5
+#    ifconfig eth0.53  10.10.5.1 netmask 255.255.255.0
+# 3. restart eth0 interface
+#    /etc/init.d/network restart; bash /etc/rc.local;
+#
 #Google grpc proto usage.
 # protoc document:
 #  https://developers.google.com/protocol-buffers/docs/proto3
