@@ -529,3 +529,8 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #   $ go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
 # 3. protoc cmd usage, under proto files path.
 #   $ $GOPATH/bin/protoc --proto_path="~/golib/bin/protoc_include/" -I=./ --go_out=plugins=grpc:. *.proto
+#
+#centos 7 set hostname
+#   hostnamectl set-hostname a01.host.com --static
+#   hostnamectl set-hostname a01.host.com
+#   hostnamectl status
