@@ -22,25 +22,31 @@ then
     RED="$( echo -e "\e[31m" )"
     HL_RED="$( echo -e "\e[31;1m" )"
     HL_GREEN="$( echo -e "\e[32;1m" )"
+    HL_YELLOW="$( echo -e "\e[33;1m" )"
     HL_BLUE="$( echo -e "\e[34;1m" )"
 
     NORMAL="$( echo -e "\e[0m" )"
 fi
 
-_hl_red()    { echo "$HL_RED""$@""$NORMAL";}
-_hl_green()  { echo "$HL_GREEN""$@""$NORMAL";}
-_hl_blue()   { echo "$HL_BLUE""$@""$NORMAL";}
+_hl_red()     { echo "$HL_RED""$@""$NORMAL";}
+_hl_green()   { echo "$HL_GREEN""$@""$NORMAL";}
+_hl_yellow()  { echo "$HL_YELLOW""$@""$NORMAL";}
+_hl_blue()    { echo "$HL_BLUE""$@""$NORMAL";}
 
 _notice() {
-    echo $(_hl_green '  =>') "$@" >&2
+    echo $(_hl_green '==>') "$@" >&2
 }
 
 _trace() {
-    echo $(_hl_blue '  ->') "$@" >&2
+    echo $(_hl_blue ' ->') "$@" >&2
+}
+
+_warn() {
+    echo $(_hl_yellow ' ->') "$@" >&2
 }
 
 _print_fatal() {
-    echo $(_hl_red '==>') "$@" >&2
+    echo $(_hl_red ' =>') "$@" >&2
 }
 
 
@@ -50,14 +56,14 @@ if [ -d ${DESTDIR} ]; then
     pushd . &>/dev/null
     cd ${DESTDIR}
 
-    for dir in `find "${DESTDIR}" -maxdepth 3 -name ".git" -type d`; do
+    for dir in `find "${DESTDIR}" -maxdepth 2 -name ".git" -type d`; do
         pdir=${dir%/*}
         _notice "Start update code in ${pdir} ..."
         cd "$dir/../" && git pull --recurse-submodules
         if [ $? -eq 0 ]; then
             _trace "Update code in ${pdir} succ."
         else
-            _print_fatal "Update code in ${pdir} fail."
+            _warn "Update code in ${pdir} fail."
         fi
     done
 
