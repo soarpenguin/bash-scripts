@@ -534,3 +534,16 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #   hostnamectl set-hostname a01.host.com --static
 #   hostnamectl set-hostname a01.host.com
 #   hostnamectl status
+#
+#Upstart service
+#$ sudo /sbin/initctl stop strong-pm
+#$ sudo rm /etc/init/strong-pm.conf
+#$ sudo /sbin/initctl reload-configuration
+#$ sudo rm -rf /var/lib/strong-pm
+#
+#Systemd service
+#$ sudo /usr/bin/systemctl stop strong-pm.service
+#$ sudo /usr/bin/systemctl disable strong-pm.service
+#$ sudo rm /etc/systemd/system/strong-pm.service
+#$ sudo /usr/bin/systemctl daemon-reload
+#$ sudo rm -rf /var/lib/strong-pm
