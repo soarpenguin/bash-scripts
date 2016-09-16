@@ -361,8 +361,13 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #                   --no-hostname_lookup --cluster="mesoscluster"  --quorum=2 </dev/null >/dev/null 2>&1 &
 #
 #
-#virtualenv ./env
-#pip install --download <DIR> -r requirements.txt
+#$ sudo apt install virtualenv
+#$ cd dst/ && virtualenv ./env
+#$ ./env/bin/pip install -r requirements.txt
+#$ ./env/bin/pip install --upgrade git+https://github.com/mpetazzoni/kazoocli
+#$ ./env/local/bin/kz
+#
+#$ pip install --download <DIR> -r requirements.txt
 #$ pip install --no-index --find-links=[file://]<DIR> -r requirements.txt
 #
 # yum install download only
