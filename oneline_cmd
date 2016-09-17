@@ -423,6 +423,14 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # govendor init
 # govendor add +external
 #
+# go list
+# go list ...
+# go list ...xml...
+# go list -json hash
+# go list -f '{{join  .Deps " " }}' strconv
+# go list -f '{{.ImportPath}} -> {{join .Imports " "}}' strconv
+# godoc -http :8000
+#
 # # build current project
 # go build ./...
 # # print the commands build current project but do not run them.
