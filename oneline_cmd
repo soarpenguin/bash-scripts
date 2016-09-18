@@ -452,6 +452,13 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # ###### the most useful ones are: --text, --web and --list
 # $ go tool pprof --text http.test cprof
 # $ go tool pprof --text mybin http://myserver:6060/debug/pprof/profile
+#
+# $ go tool cover -html=c.out
+# $ go test -run=Coverage -coverprofile=c.out gopl.io/cn7/eval
+# $ go test -v -run=Coverage gopl.io/cn7/eval
+#
+# $ go test -bench=.
+# $ go test -bench=. -benchmem
 
 ########
 # Recovery rm -rf file
