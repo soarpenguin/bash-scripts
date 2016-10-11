@@ -567,3 +567,6 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 #$ sudo rm /etc/systemd/system/strong-pm.service
 #$ sudo /usr/bin/systemctl daemon-reload
 #$ sudo rm -rf /var/lib/strong-pm
+#
+#List all ld library
+#$ ldd $(which /usr/local/nginx/sbin/nginx)
