@@ -236,6 +236,7 @@ update-ca-trust extract
 
 docker login --username='test' --password='test' --email="chris.koller@dropbit.ch" https://registry.cmdb.test.net
 docker login --username='test' --password='test' --email="chris.koller@dropbit.ch" https://registry.cmdb.test.net/v2/
+docker login https://registry.cmdb.test.net
 
 #### get container list from remote api.
 curl http://127.0.0.1:4243/containers/json | python -m json.tool
@@ -327,3 +328,9 @@ docker-containerd-shim 4b1ff2a9db...xxx /var/run/docker/libcontainerd/4b1ff2a9db
 # mkdir rootfs
 # mount -o loop /path/to/iso rootfs
 # tar -C rootfs -c . | docker import - soarpenguin/base
+
+# short key map
+#  exit: Ctrl-D or exit
+#  attach: docker attach CONTAINER-ID
+#  detach: Ctrl-P + Ctrl-Q
+
