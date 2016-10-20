@@ -334,3 +334,6 @@ docker-containerd-shim 4b1ff2a9db...xxx /var/run/docker/libcontainerd/4b1ff2a9db
 #  attach: docker attach CONTAINER-ID
 #  detach: Ctrl-P + Ctrl-Q
 
+# cgroup doc
+#    https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Resource_Management_Guide/ch01.html
+#    http://tiewei.github.io/devops/howto-use-cgroup/
