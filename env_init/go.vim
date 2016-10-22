@@ -1,6 +1,7 @@
 $ git clone https://github.com/farazdagi/vim-go-ide.git ~/.vim_go_runtime
 $ sh ~/.vim_go_runtime/bin/install
-$ 
+$
+$ gotags -R ./*.go &> tags
 $ vim -u ~/.vimrc.go
 
 ##################################################
