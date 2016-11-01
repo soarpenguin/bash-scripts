@@ -437,6 +437,10 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # go build -n ./...
 # go install -a -v ./...
 # go get -v -u -x github.com/hyper-carrot/go_lib
+# # disable inline and compile opt
+# go build -gcflags "-N -l" -o test test.go
+# # get asm code
+# go tool objdump -s "runtime\.init\b" test
 
 # go pprof usage
 # ## import _ "net/http/pprof"
