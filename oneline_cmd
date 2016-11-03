@@ -441,6 +441,26 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # go build -gcflags "-N -l" -o test test.go
 # # get asm code
 # go tool objdump -s "runtime\.init\b" test
+#
+# #### go tool usage.
+# go tool asm [options] file.s
+# go tool cgo -- [compiler options] file.go ...
+# go tool compile [options] file.go...
+# go tool cover -html=c.out -o coverage.html
+# go tool cover -mode=set -var=CoverageVariableName program.go
+# go tool dist test
+# go tool doc json
+# go tool fix [-diff] [-r fixname,...] [-force fixname,...] [path ...]
+# go tool link [options] main.o
+# go tool nm [-n] [-size] [-sort order] [-type] file...
+# go tool objdump [-s symregexp] binary [start end]
+# go tool pack op file.a [name....]
+# go tool pprof [options] [binary] <profile source> ...
+# go tool tour
+# go test -trace=trace.out pkg
+# go tool vet [flags] directory...
+# go tool vet [flags] files...
+# go tool yacc [-o output] [-v parsetable] input
 
 # go pprof usage
 # ## import _ "net/http/pprof"
