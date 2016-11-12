@@ -423,6 +423,11 @@ sed -i '/xxxxxx/,/yyyyyy/d' file
 # govendor init
 # govendor add +external
 #
+# govendor list [options] ( +status or import-path-filter )
+# govendor {add, update, remove} [options] ( +status or import-path-filter )
+# govendor migrate [auto, godep, internal]
+# govendor [fmt, build, install, clean, test, vet, generate] ( +status or import-path-filter )
+#
 # go list
 # go list ...
 # go list ...xml...
