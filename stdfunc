@@ -361,6 +361,32 @@ function writefile {
 	vecho
 }
 
+resolve_link() {
+  $(type -p greadlink readlink | head -1) "$1"
+}
+
+abs_dirname() {
+  local cwd="$(pwd)"
+  local path="$1"
+
+  while [ -n "$path" ]; do
+    cd "${path%/*}"
+    local name="${path##*/}"
+    path="$(resolve_link "$name" || true)"
+  done
+
+  pwd
+  cd "$cwd"
+}
+
+expand_path() {
+  { cd "$(dirname "$1")" 2>/dev/null
+    local dirname="$PWD"
+    cd "$OLDPWD"
+    echo "$dirname/$(basename "$1")"
+  } || echo "$1"
+}
+
 #################################
 #assert_not_root_user
 #assert_root_user
