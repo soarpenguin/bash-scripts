@@ -264,6 +264,9 @@ sed -i '/        - git branch/i\        - git rev-parse HEAD' file
 sed -i '/        - git branch/a\        - git rev-parse HEAD' file
 #   delete lines between match line.
 sed -i '/xxxxxx/,/yyyyyy/d' file
+#   match lines between (22 and 55)
+awk '/22/{p=1}/55/{p=0}p' file
+awk '/22/,/55/{if($0 !~ /55/) print $0}' urfile
 
 # sed usage
 # -i[SUFFIX]: backup extension.
