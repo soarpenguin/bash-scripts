@@ -622,6 +622,7 @@ awk '/22/,/55/{if($0 !~ /55/) print $0}' urfile
 #
 #Rsync from local src to dest.
 #rsync -av --itemize-changes "src/" "dest/"
+#rsync -vzrtopgu /Data/scripts/ /tmp/back_srcipt/
 #
 #Check port ":8080".
 #check_tomcat=`(/usr/sbin/ss -ln4 sport = :8080; /usr/sbin/ss -ln6 sport = :8080) | grep -c ":8080"`
@@ -632,3 +633,6 @@ awk '/22/,/55/{if($0 !~ /55/) print $0}' urfile
 #$ mvn package
 #$ mvn install
 #$ mvn test
+#
+#$ mvn clean compile install -Plocal
+#$ mvn spring-boot:run
