@@ -634,5 +634,9 @@ awk '/22/,/55/{if($0 !~ /55/) print $0}' urfile
 #$ mvn install
 #$ mvn test
 #
+#$ mvn dependency:tree
 #$ mvn clean compile install -Plocal
 #$ mvn spring-boot:run
+#
+#$ mvn archetype:generate -DgroupId=com.yiibai -DartifactId=NumberGenerat -DinteractiveMode=false
+#$ mvn archetype:create -DgroupId=packageName -DartifactId=webappName -DarchetypeArtifactId=maven-archetype-webapp
