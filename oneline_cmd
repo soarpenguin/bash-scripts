@@ -646,7 +646,7 @@ awk '/22/,/55/{if($0 !~ /55/) print $0}' urfile
 #$java -Xint -version  #interpreted mode
 #$java -Xcomp -version #compiled mode
 #$java -X              #display all -X options
-#$java -XX:+flag
+#$java -XX:+<option>/-XX:-<option> -XX:<option>=<number> -XX:<option>=<string>
 #$java -XX:+PrintCommandLineFlags -version
 #$java -Xms128m -Xmx2g MyApp   #set min/max heap size
 #$java -XX:InitialHeapSize=128m -XX:MaxHeapSize=2g MyApp
