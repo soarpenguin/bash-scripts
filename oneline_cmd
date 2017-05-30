@@ -664,3 +664,6 @@ $jmap -permstat pid
 $jmap -heap 21711
 $jmap -histo:live 21711 | more
 $jmap -dump:format=b,file=/tmp/dump.dat 21711
+
+$truncate -s 100M filename
+$dd if=/dev/null of=test.log
