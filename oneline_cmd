@@ -605,50 +605,62 @@ awk '/22/,/55/{if($0 !~ /55/) print $0}' urfile
 #   hostnamectl status
 #
 #Upstart service
-#$ sudo /sbin/initctl stop strong-pm
-#$ sudo rm /etc/init/strong-pm.conf
-#$ sudo /sbin/initctl reload-configuration
-#$ sudo rm -rf /var/lib/strong-pm
+$sudo /sbin/initctl stop strong-pm
+$sudo rm /etc/init/strong-pm.conf
+$sudo /sbin/initctl reload-configuration
+$sudo rm -rf /var/lib/strong-pm
 #
 #Systemd service
-#$ sudo /usr/bin/systemctl stop strong-pm.service
-#$ sudo /usr/bin/systemctl disable strong-pm.service
-#$ sudo rm /etc/systemd/system/strong-pm.service
-#$ sudo /usr/bin/systemctl daemon-reload
-#$ sudo rm -rf /var/lib/strong-pm
+$sudo /usr/bin/systemctl stop strong-pm.service
+$sudo /usr/bin/systemctl disable strong-pm.service
+$sudo rm /etc/systemd/system/strong-pm.service
+$sudo /usr/bin/systemctl daemon-reload
+$sudo rm -rf /var/lib/strong-pm
 #
 #List all ld library
-#$ ldd $(which /usr/local/nginx/sbin/nginx)
+$ ldd $(which /usr/local/nginx/sbin/nginx)
 #
 #Rsync from local src to dest.
-#rsync -av --itemize-changes "src/" "dest/"
-#rsync -vzrtopgu /Data/scripts/ /tmp/back_srcipt/
+rsync -av --itemize-changes "src/" "dest/"
+rsync -vzrtopgu /Data/scripts/ /tmp/back_srcipt/
 #
 #Check port ":8080".
 #check_tomcat=`(/usr/sbin/ss -ln4 sport = :8080; /usr/sbin/ss -ln6 sport = :8080) | grep -c ":8080"`
 #
 #mvn usage
-#$ mvn -v
-#$ mvn compile
-#$ mvn package
-#$ mvn install
-#$ mvn test
-#
-#$ mvn dependency:tree
-#$ mvn clean compile install -Plocal
-#$ mvn spring-boot:run
-#
-#$ mvn archetype:generate -DgroupId=com.yiibai -DartifactId=NumberGenerat -DinteractiveMode=false
-#$ mvn archetype:create -DgroupId=packageName -DartifactId=webappName -DarchetypeArtifactId=maven-archetype-webapp
+$ mvn -v
+$ mvn compile
+$ mvn package
+$ mvn install
+$ mvn test
+
+$ mvn dependency:tree
+$ mvn clean compile install -Plocal
+$ mvn spring-boot:run
+
+$ mvn archetype:generate -DgroupId=com.yiibai -DartifactId=NumberGenerat -DinteractiveMode=false
+$ mvn archetype:create -DgroupId=packageName -DartifactId=webappName -DarchetypeArtifactId=maven-archetype-webapp
 #
 ##java cmd option: 1) Standard  2) -X  3) -XX
-#$java -version        #mixed mode
-#$java -Xint -version  #interpreted mode
-#$java -Xcomp -version #compiled mode
-#$java -X              #display all -X options
-#$java -XX:+<option>/-XX:-<option> -XX:<option>=<number> -XX:<option>=<string>
-#$java -XX:+PrintCommandLineFlags -version
-#$java -Xms128m -Xmx2g MyApp   #set min/max heap size
-#$java -XX:InitialHeapSize=128m -XX:MaxHeapSize=2g MyApp
-#$java -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/heapdump.hprof -XX:OnOutOfMemoryError ="sh ~/cleanup.sh" MyApp
-#$java -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:<file> MyApp   #open gc log
+$java -version        #mixed mode
+$java -Xint -version  #interpreted mode
+$java -Xcomp -version #compiled mode
+$java -X              #display all -X options
+$java -XX:+<option>/-XX:-<option> -XX:<option>=<number> -XX:<option>=<string>
+$java -XX:+PrintCommandLineFlags -version
+$java -Xms128m -Xmx2g MyApp   #set min/max heap size
+$java -XX:InitialHeapSize=128m -XX:MaxHeapSize=2g MyApp
+$java -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/heapdump.hprof -XX:OnOutOfMemoryError ="sh ~/cleanup.sh" MyApp
+$java -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:<file> MyApp   #open gc log
+
+$jps -m -l #show all process stats on jvm
+#
+$ps -ef | grep mrf-center | grep -v grep
+#root     21711     1  1 14:47 pts/3    00:02:10 java -jar mrf-center.jar
+$printf "%x\n" 21742
+$jstack 21711 | grep 54ee
+#
+$jmap -permstat pid
+$jmap -heap 21711
+$jmap -histo:live 21711 | more
+$jmap -dump:format=b,file=/tmp/dump.dat 21711
