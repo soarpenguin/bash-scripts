@@ -301,36 +301,39 @@ awk '/22/,/55/{if($0 !~ /55/) print $0}' urfile
 
 ################## git usage ##################
 #git rollback version
-#git reset --hard 931c6a6
+$git reset --hard 931c6a6
 
 #look a file edit log for every commit.
-#git log -p filename
+$git log -p filename
 #
 #look a file commit log of every line.
-#git blame
+$git blame
 
 ## git make patch file and apply patch
-#git checkout Fix
+$git checkout Fix
 #  edit code and commit.
-#git format-patch -M master
+$git format-patch -M master
 #
-#git patch "git format-patch"
-#git am filename.patch
+$git patch "git format-patch"
+$git am filename.patch
 
 ## develop at ansible
-#git clone https://github.com/soarpenguin/ansible.git ansible
-#cd ansible && git remote add ansible https://github.com/ansible/ansible.git
-#git checkout -b bugfix ansible/devel && git pull
-#   edit code and commit
-#git push origin bugfix:bugfix
-#   github pull request
+$git clone https://github.com/soarpenguin/ansible.git ansible
+$cd ansible && git remote add ansible https://github.com/ansible/ansible.git
+$git checkout -b bugfix ansible/devel && git pull
+#  edit code and commit
+$git push origin bugfix:bugfix
+
+#github pull request
 #git clone git recursive.
-#   git clone --recursive https://github.com/XiaoMi/open-falcon.git
-#   git pull --recurse-submodules
+$git clone --recursive https://github.com/XiaoMi/open-falcon.git
+$git pull --recurse-submodules
 #
-#git su
-#   git submodule add https://github.com/XiaoMi/open-falcon.git open-falcon
-#   git submodule update --init --recursive
+$git submodule add https://github.com/XiaoMi/open-falcon.git open-falcon
+$git submodule update --init --recursive
+
+#find top 5 max file in git mirror.
+$git rev-list --objects --all | grep "$(git verify-pack -v .git/objects/pack/*.idx | sort -k 3 -n | tail -5 | awk '{print$1}')"
 
 #screen -c ~/.screenrc -D -RR screenname
 #screen -drUA screenname
