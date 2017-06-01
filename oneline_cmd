@@ -670,3 +670,8 @@ $jmap -dump:format=b,file=/tmp/dump.dat 21711
 
 $truncate -s 100M filename
 $dd if=/dev/null of=test.log
+
+#openstack
+#https://github.com/int32bit/openstack-workflow
+#ceph
+#http://download.ceph.com/rpm/el6/x86_64/
