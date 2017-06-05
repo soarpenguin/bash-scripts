@@ -657,11 +657,25 @@ $java -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/heapdump.hprof -XX:O
 $java -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:<file> MyApp   #open gc log
 
 $jps -m -l #show all process stats on jvm
+$jps -v -l #show main class name and jvm parameter started.
+$jinfo 21711
 #
 $ps -ef | grep mrf-center | grep -v grep
 #root     21711     1  1 14:47 pts/3    00:02:10 java -jar mrf-center.jar
-$printf "%x\n" 21742
+$printf "%x\n" 21711
 $jstack 21711 | grep 54ee
+
+$jstat -class 10532
+$jstat -gc 10532
+$jstat -gccapacity 10532
+$jstat -gcutil 10532
+$jstat -gccause 10532
+$jstat -gcnew 10532
+$jstat -gcnewcapacity 10532
+$jstat -gcold 10532
+$jstat -gcoldcapacity 10532
+$jstat -compiler 10532
+$jstat -printcompilation 10532
 #
 $jmap -permstat pid
 $jmap -heap 21711
