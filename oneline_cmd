@@ -324,6 +324,11 @@ $git checkout -b bugfix ansible/devel && git pull
 #  edit code and commit
 $git push origin bugfix:bugfix
 
+## delete local and remote branch
+$git branch -D <branch_name>   # git branch -d <branch_name>
+$git push origin :<branch_name>  # git push origin --delete <branch_name>
+$git fetch --all --prune # clean branch when deleted on other machines
+
 #github pull request
 #git clone git recursive.
 $git clone --recursive https://github.com/XiaoMi/open-falcon.git
