@@ -340,6 +340,9 @@ $git submodule update --init --recursive
 #find top 5 max file in git mirror.
 $git rev-list --objects --all | grep "$(git verify-pack -v .git/objects/pack/*.idx | sort -k 3 -n | tail -5 | awk '{print$1}')"
 
+#rename last commit author.
+$git commit --amend --author='soarpenguin <soarpenguin@gmail.com>'
+
 #screen -c ~/.screenrc -D -RR screenname
 #screen -drUA screenname
 # remove and destroy a screen session.
@@ -701,3 +704,6 @@ $dd if=/dev/null of=test.log
 #https://github.com/int32bit/openstack-workflow
 #ceph
 #http://download.ceph.com/rpm/el6/x86_64/
+
+$sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.py | sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()"
+
