@@ -336,7 +336,7 @@ $git submodule update --init --recursive
 $git rev-list --objects --all | grep "$(git verify-pack -v .git/objects/pack/*.idx | sort -k 3 -n | tail -5 | awk '{print$1}')"
 
 #rename last commit author.
-$git commit --amend --author=‘soarpenguin <soarpenguin@gmail.com>’
+$git commit --amend --author='soarpenguin <soarpenguin@gmail.com>'
 
 #screen -c ~/.screenrc -D -RR screenname
 #screen -drUA screenname
