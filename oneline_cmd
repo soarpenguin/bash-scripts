@@ -183,6 +183,9 @@ sort -k1,1n filename
 #static memory for process
 ps -eo fname,rss | awk '{arr[$1]+=$2} END {for (i in arr) {print i,arr[i]}}' | sort -k2 -nr | column -t
 
+ps aux | sort -rnk 3 | head -20
+ps aux | sort -rnk 4 | head -20
+
 #RAID0
 mdadm -C /dev/md0 -a yes -l 0 -n 2 /dev/sdb /dev/sdc
 mdadm -D --scan > /etc/mdadm.conf
