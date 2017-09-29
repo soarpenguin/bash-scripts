@@ -1,0 +1,11 @@
+# This is ~/.ssh/config
+# For all hosts
+Host *
+ControlMaster auto
+ControlPath ~/.ssh/master-%r@%h:%p
+ServerAliveInterval 10
+
+# For a selection of hosts
+#Host *.xxxx.com
+#ServerAliveInterval 10
+

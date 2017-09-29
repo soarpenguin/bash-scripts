@@ -114,10 +114,10 @@ if [ "$OS" != "darwin" ]; then
     exit $RETFAIL
 fi
 
-uid=`id -u`
-if [ $uid -ne '0' ]; then 
-    _invoke_sudo root "${CURDIR}/$SCRIPT $@"
-fi
+#uid=`id -u`
+#if [ $uid -ne '0' ]; then
+#    _invoke_sudo root "${CURDIR}/$SCRIPT $@"
+#fi
 
 #chsh -s $(which zsh)
 #curl -L http://install.ohmyz.sh | sh
