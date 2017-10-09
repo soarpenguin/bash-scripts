@@ -183,6 +183,11 @@ man() {
 #alias jdk7="export JAVA_HOME=$JAVA_7_HOME"
 #alias jdk8="export JAVA_HOME=$JAVA_8_HOME"
 
+#USER_HOME=`cd; pwd`
+#export M2_HOME="$USER_HOME/cprogram/tools/maven-3.5.0"
+#export GRADE_HOME="$USER_HOME/cprogram/tools/gradle-4.2"
+#export PATH=$PATH:$M2_HOME/bin:$GRADE_HOME/bin
+
 ret=$(command -v docker)
 if [ x"ret" == x"0" ]; then
     # Kill all running containers.
