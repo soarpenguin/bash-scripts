@@ -655,6 +655,12 @@ $ mvn spring-boot:run
 $ mvn archetype:generate -DgroupId=com.yiibai -DartifactId=NumberGenerat -DinteractiveMode=false
 $ mvn archetype:create -DgroupId=packageName -DartifactId=webappName -DarchetypeArtifactId=maven-archetype-webapp
 $ mvn dependency:tree -Dverbose
+
+#gradle usage
+$gradle build
+$gradle build -x test
+$gradle build -x test --parallel
+$gradle tasks
 #
 ##java cmd option: 1) Standard  2) -X  3) -XX
 $java -version        #mixed mode
