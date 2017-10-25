@@ -306,6 +306,9 @@ awk '/22/,/55/{if($0 !~ /55/) print $0}' urfile
 #git rollback version
 $git reset --hard 931c6a6
 
+## git reset author info.
+$git commit --amend --reset-author
+
 #look a file edit log for every commit.
 $git log -p filename
 #
