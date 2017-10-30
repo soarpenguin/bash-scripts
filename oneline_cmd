@@ -720,6 +720,8 @@ $dd if=/dev/null of=test.log
 
 ## sleep 3 sec and kill current pid when timeout.
 #$sleep 3 && kill -9 -- -$$ &
+## mkdir dirname and cd to dirname
+#$mkdir dirname && cd $_
 
 $sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.py | sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()"
 
