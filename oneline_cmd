@@ -216,6 +216,10 @@ mpstat 2 10
 slabtop
 slabtop -o | grep -E '(^  OBJS|tw_sock_TCP|tcp_bind_bucket)'
 
+perf top
+iostat -dx 1 20
+iotop
+
 ## sar usage
 sar
 # read sar statistic data from file /var/log/sa/sa01
