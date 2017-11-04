@@ -231,28 +231,13 @@ perf report
 perf trace -p pid
 
 #### four useful perf command. perf help commnd.
-perf stat
-perf record
-perf report
-perf list
+perf stat [-e <EVENT> | --event=EVENT] [-a] <command>
+perf stat [-e <EVENT> | --event=EVENT] [-a] — <command> [<options>]
+perf record [-e <EVENT> | --event=EVENT] [-l] [-a] <command>
+perf record [-e <EVENT> | --event=EVENT] [-l] [-a] — <command> [<options>]
+perf report [-i <file> | --input=file]
+perf list [hw|sw|cache|tracepoint|pmu|event_glob]
 
-## sar usage
-sar
-# read sar statistic data from file /var/log/sa/sa01
-sar -r -n DEV -f /var/log/sa/sa01
-sar -r -n SOCK -f /var/log/sa/sa01
-
-##### strace - trace system calls and signals
-#trace network syscall for a existed PID.
-strace -p $PID -f -e trace=network -s 10000
-
-# get trace all function call.
-strace -p $PID
-# get statistic time usage.
-strace -cp $PID
-# trace clone func call
-strace -T -e clone -p $PID
-# statistic syscall time usage in some time.
 strace -T -r -c -p $PID
 
 ##### ltrace - a library call tracer
