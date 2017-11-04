@@ -216,9 +216,25 @@ mpstat 2 10
 slabtop
 slabtop -o | grep -E '(^  OBJS|tw_sock_TCP|tcp_bind_bucket)'
 
-perf top
 iostat -dx 1 20
 iotop
+
+## perf usage
+perf top
+perf stat ./program
+perf stat -e raw_syscalls:sys_enter ls 
+#### record and report
+perf record –e cpu-clock -g ./program
+perf report
+perf record -e raw_syscalls:sys_enter ls
+perf report
+perf trace -p pid
+
+#### four useful perf command. perf help commnd.
+perf stat
+perf record
+perf report
+perf list
 
 ## sar usage
 sar
