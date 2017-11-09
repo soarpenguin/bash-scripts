@@ -1,2 +1,13 @@
 25 16 * * * perl /home/fedora/hello.pl >> /home/fedora/test.log 2>&1
 */1 * * * * perl /home/fedora/hello.pl >> /home/fedora/test1.log 2>&1
+
+### clear crontab
+crontab -r
+
+BASEDIR=`dirname $0`
+BASEDIR=`(cd "$BASEDIR"; pwd)`
+monitor=$1
+PROGRAM=$BASEDIR/$monitor
+CRONTAB_CMD="*/2 * * * * sh $PROGRAM >> $BASEDIR/$monitor.log 2>&1 &"
+(crontab -l 2>/dev/null | grep -Fv $PROGRAM; echo "$CRONTAB_CMD") | crontab -
+
