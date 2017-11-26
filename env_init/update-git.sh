@@ -56,7 +56,7 @@ if [ -d ${DESTDIR} ]; then
     pushd . &>/dev/null
     cd ${DESTDIR}
 
-    for dir in `find "${DESTDIR}" -maxdepth 2 -name ".git" -type d`; do
+    for dir in `find "${DESTDIR}" -maxdepth 3 -name ".git" -type d`; do
         pdir=${dir%/*}
         _notice "Start update code in ${pdir} ..."
         cd "$dir/../" && git pull --recurse-submodules

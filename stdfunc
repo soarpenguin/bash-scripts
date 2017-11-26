@@ -365,6 +365,10 @@ resolve_link() {
   $(type -p greadlink readlink | head -1) "$1"
 }
 
+readlink_mac() {
+  python -c "import os; print(os.path.realpath('$1'))"
+}
+
 abs_dirname() {
   local cwd="$(pwd)"
   local path="$1"
@@ -390,5 +394,6 @@ expand_path() {
 #################################
 #assert_not_root_user
 #assert_root_user
+readlink_mac "./"
 error "Bad news"
 writefile "test" "hello"
