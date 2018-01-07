@@ -686,6 +686,7 @@ $ mvn archetype:create -DgroupId=packageName -DartifactId=webappName -Darchetype
 $ mvn dependency:tree -Dverbose
 
 #gradle usage
+$gradle assemble
 $gradle build
 $gradle build -x test
 $gradle build -x test --parallel
