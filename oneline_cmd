@@ -688,6 +688,7 @@ $ mvn dependency:tree -Dverbose
 #gradle usage
 $gradle assemble
 $gradle build
+$gradle -m build  #just run not real build
 $gradle build -x test
 $gradle build -x test --parallel
 $gradle tasks
