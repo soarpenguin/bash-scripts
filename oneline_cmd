@@ -752,4 +752,5 @@ $dd if=/dev/null of=test.log
 #$mkdir dirname && cd $_
 
 $sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.py | sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()"
-
+$brew install autojump
+## jq kill pkill pgrep ag nc
