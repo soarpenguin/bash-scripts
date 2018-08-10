@@ -493,6 +493,9 @@ $git commit --amend --author='soarpenguin <soarpenguin@gmail.com>'
 # # get asm code
 # go tool objdump -s "runtime\.init\b" test
 #
+# go build -gcflags "-N" -o test test.go
+# go tool objdump -S -s "main\.test" test
+#
 # #### go tool usage.
 # go tool asm [options] file.s
 # go tool cgo -- [compiler options] file.go ...
