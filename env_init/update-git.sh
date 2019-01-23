@@ -49,9 +49,69 @@ _print_fatal() {
     echo $(_hl_red ' =>') "$@" >&2
 }
 
+_usage() {
+    cat << USAGE
+Usage: bash ${MYNAME} srcpath.
+
+Require:
+    srcpath     srcpath for operation.
+
+USAGE
+
+    exit $RET_OK
+}
+
+#
+# Parses command-line options.
+#  usage: _parse_options "$@" || exit $?
+#
+_parse_options()
+{
+    declare -a argv
+
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -h|--help)
+                _usage
+                exit
+                ;;
+            --)
+                shift
+                argv=("${argv[@]}" "${@}")
+                break
+                ;;
+            -*)
+                _print_fatal "command line: unrecognized option $1" >&2
+                return 1
+                ;;
+            *)
+                argv=("${argv[@]}" "${1}")
+                shift
+                ;;
+        esac
+    done
+
+    case ${#argv[@]} in
+        1)
+            DESTDIR="${argv[0]}"
+            ;;
+        0|*)
+            _usage 1>&2
+            return 1
+    ;;
+    esac
+}
+
 
 ##################### main route #######################
+_parse_options "${@}" || _usage
+
 if [ -d ${DESTDIR} ]; then
+    if [[ ${DESTDIR:0:1} = \.* ]]
+    then
+        DESTDIR=$(cd ${DESTDIR}; pwd)
+    fi
+
     _trace "Start updating code in ${DESTDIR}"
     pushd . &>/dev/null
     cd ${DESTDIR}
@@ -61,13 +121,13 @@ if [ -d ${DESTDIR} ]; then
         _notice "Start update code in ${pdir} ..."
         cd "$dir/../" && git pull --recurse-submodules
         if [ $? -eq 0 ]; then
-            _trace "Update code in ${pdir} succ."
+            _notice "Update code in ${pdir} succ. ${HL_GREEN}✔${NORMAL}"
         else
-            _warn "Update code in ${pdir} fail."
+            _warn "Update code in ${pdir} fail. ${HL_RED}✗${NORMAL}"
         fi
     done
 
-    popd
+    popd &>/dev/null
     _trace "End updating code in ${DESTDIR}"
     exit ${RET_OK}
 else
