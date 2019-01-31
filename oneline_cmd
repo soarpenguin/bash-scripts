@@ -354,6 +354,10 @@ $git rev-list --objects --all | grep "$(git verify-pack -v .git/objects/pack/*.i
 #rename last commit author.
 $git commit --amend --author='soarpenguin <soarpenguin@gmail.com>'
 
+#http://danielkummer.github.io/git-flow-cheatsheet/
+#install git flow: https://github.com/petervanderdoes/gitflow-avh
+$git flow --help
+
 #screen -c ~/.screenrc -D -RR screenname
 #screen -drUA screenname
 # remove and destroy a screen session.
