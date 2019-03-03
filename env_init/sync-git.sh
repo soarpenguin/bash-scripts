@@ -50,10 +50,10 @@ _print_fatal() {
 
 _usage() {
     cat << USAGE
-Usage: bash ${MYNAME} srcpath.
+Usage: bash ${MYNAME} git.list
 
 Require:
-    srcpath     srcpath for operation.
+    git.list     git list file for sync operation, eg: dst-git src-git
 
 USAGE
 
