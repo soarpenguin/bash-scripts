@@ -238,6 +238,11 @@ perf record [-e <EVENT> | --event=EVENT] [-l] [-a] — <command> [<options>]
 perf report [-i <file> | --input=file]
 perf list [hw|sw|cache|tracepoint|pmu|event_glob]
 
+#### FlameGraph https://github.com/brendangregg/FlameGraph
+perf record -F 99 -a -g -- sleep 60
+perf script | ./stackcollapse-perf.pl > out.perf-folded
+./flamegraph.pl out.perf-folded > perf-kernel.svg
+
 strace -T -r -c -p $PID
 
 ##### ltrace - a library call tracer
@@ -494,6 +499,10 @@ $git flow --help
 # go get -v -u -x github.com/hyper-carrot/go_lib
 # # disable inline and compile opt
 # go build -gcflags "-N -l" -o test test.go
+# # get asm code
+# go build -gcflags -S test.go
+# GOARCH=amd64 go tool compile -S -N -l defer.go 
+
 # # get asm code
 # go tool objdump -s "runtime\.init\b" test
 #
