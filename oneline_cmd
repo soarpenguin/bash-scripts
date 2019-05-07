@@ -284,6 +284,9 @@ awk '/22/,/55/{if($0 !~ /55/) print $0}' urfile
 # sed usage
 # -i[SUFFIX]: backup extension.
 # sed -i 's/100000/500000/' edit-filename
+#
+# match "cloud-u*" append next line to current line. 
+# cat l.resourse | grep -A 2 "^cloud" | grep -v total | sed '/cloud-u*/{N;s/,*\n/ /}' | grep -v -- '--' | awk '{print $1, $8}' | sort -k 1
 
 #shopt -s histappend; history -a
 #history -c  ;>/root/.bash_history
