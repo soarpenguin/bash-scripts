@@ -784,3 +784,6 @@ $ vagrant init
 $ vagrant up
 $ vagrant reload
 $ vagrant ssh
+$ vagrant halt vmname
+$ vagrant status
+$ vagrant destroy vmname
