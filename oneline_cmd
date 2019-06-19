@@ -540,6 +540,9 @@ $git flow --help
 # $ go tool pprof http://localhost:8080/debug/pprof/block
 # $ go tool pprof cmd(program-name) http://localhost:8080/debug/pprof/heap
 #
+# $ brew install graphviz
+# $ go tool pprof -svg elastic-ecm.prof.249944 > cpu-1.svg
+
 # CPU
 # ### example: write cpuprofile info to cprof.
 # $ go test -run=none -bench=ClientServerParallel4 -cpuprofile=cprof net/http
