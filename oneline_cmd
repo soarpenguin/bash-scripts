@@ -790,3 +790,9 @@ $ vagrant ssh
 $ vagrant halt vmname
 $ vagrant status
 $ vagrant destroy vmname
+
+## asciinema  https://asciinema.org/
+## https://asciinema.org/docs/usage
+$ brew install asciinema
+$ asciinema rec  # typing exit or hitting Ctrl-D
+$ asciinema auth
