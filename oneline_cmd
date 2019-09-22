@@ -560,6 +560,10 @@ $git flow --help
 # #### go-swagger usage
 # $ go get -u github.com/go-swagger/go-swagger/cmd/swagger
 # $ swagger generate model -f "./swagger.yml" -t "./apis" -m types
+# $ swagger serve --host=0.0.0.0 --port=2399 --no-open ./docs/swagger.json
+# $ 
+# #### swag usage
+# $ swag init
 
 ########
 # Recovery rm -rf file
