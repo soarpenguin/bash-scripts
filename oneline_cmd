@@ -800,3 +800,9 @@ $ vagrant destroy vmname
 $ brew install asciinema
 $ asciinema rec  # typing exit or hitting Ctrl-D
 $ asciinema auth
+
+## install muti version of gcc and g++, can update-alternatives.
+$ sudo apt-get install gcc-4.8 g++-4.8
+$ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.6
+$ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.8
+$ sudo update-alternatives --config gcc
