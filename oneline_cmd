@@ -812,3 +812,13 @@ $ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 40 --slav
 $ sudo update-alternatives --config gcc
 
 du -h -x --max-depth=1
+
+dmesg_with_human_timestamps () {
+    $(type -P dmesg) "$@" | perl -w -e 'use strict;
+        my ($uptime) = do { local @ARGV="/proc/uptime";<>}; ($uptime) = ($uptime =~ /^(\d+)\./);
+        foreach my $line (<>) {
+            printf( ($line=~/^\[\s*(\d+)\.\d+\](.+)/) ? ( "[%s]%s\n", scalar localtime(time - $uptime + $1), $2 ) : $line )
+        }'
+}
+alias dmesg=dmesg_with_human_timestamps
+
