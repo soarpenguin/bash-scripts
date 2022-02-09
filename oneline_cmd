@@ -44,6 +44,27 @@ ip rule a from 11.0.0.0/8 lookup 201
 ip r a 11.0.0.0/8 dev eth0 table 201
 ip r a default via 11.17.12.1 table 201
 
+# ip netns usage
+sudo ip netns add ns1
+sudo ip netns add ns2
+sudo ip netns list
+sudo ip netns exec ns1 ifconfig lo 127.0.0.1 up
+sudo ip netns exec ns1 ifconfig -a
+sudo ip netns exec ns2 ifconfig lo 127.0.0.1 up
+sudo ip netns exec ns2 ifconfig -a
+# create up link peer
+sudo ip link add veth1.1 type veth peer name veth1.2
+sudo ip link show
+sudo ip link set veth1.1 netns ns1
+sudo ip link set veth1.2 netns ns2
+# rename veth* dev to eth0
+sudo ip netns exec ns1 ip link set veth1.1 name eth0
+sudo ip netns exec ns2 ip link set veth1.2 name eth0
+# ifconfig eth0 ip
+sudo ip netns exec ns1 ifconfig eth0 10.0.1.1/24 up
+sudo ip netns exec ns2 ifconfig eth0 10.0.1.2/24 up
+sudo ip netns exec ns1 ping 10.0.1.2
+
 # add/del vip on local dev(lo:14)
 /sbin/ifconfig lo:14 10.11.18.14 broadcast 10.11.18.14 netmask 0xffffffff up && /sbin/route add -host 10.11.18.14 dev lo:14
 ip addr del 10.11.18.14/32 dev lo:14
